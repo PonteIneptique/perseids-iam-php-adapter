@@ -1,7 +1,7 @@
 <?php
-	namespace Perseids\IAM\Provider;
+	namespace Perseids\IAM\BSP;
 	
-	class BSP {
+	class Instance {
 		/*
 		 * @url
 		 *

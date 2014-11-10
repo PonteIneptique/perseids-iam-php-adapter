@@ -1,13 +1,13 @@
 <?php
-	namespace Perseids\Tests\IAM\Provider;
+	namespace Perseids\Tests\IAM\BSP;
 
-	use Perseids\IAM\Provider\BSP;
+	use Perseids\IAM\BSP\Instance;
 
-	class BSPTest extends \PHPUnit_Framework_TestCase {
+	class InstanceTest extends \PHPUnit_Framework_TestCase {
 		protected $BSP;
 
 		protected function setUp() {
-			$this->BSP = new BSP();
+			$this->BSP = new Instance();
 		}
 
 		public function testOverrideOptions() {
