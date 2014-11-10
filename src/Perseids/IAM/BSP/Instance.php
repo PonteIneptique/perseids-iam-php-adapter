@@ -3,25 +3,50 @@
 	
 	class Instance {
 		/**
-		 * @var string The url for the BSP
+		 * The url for the BSP
+		 * @var string 
 		 */
 		protected $url = "http://services-rep.perseids.org/bsp";
 
 		/**
-		 * @var string The pass to the ssl certificates
+		 * The pass to the ssl certificates
+		 * @var string 
 		 */
 		protected $certificates = null;
 
-		/**
-		 * @var \GuzzleHttp\Client A guzzle client to make http request
+		/** 
+		 * A guzzle client to make http request
+		 * @var \GuzzleHttp\Client
 		 */
 		protected $client;
+
+		/**
+		 * [$XBambooRoles description]
+		 * @var string
+		 */
+		protected $XBambooRoles = "";
+
+		/**
+		 * [$XBambooAppId description]
+		 * @var string
+		 */
+		protected $XBambooAppId = "";
+
+		/**
+		 * Bamboo Person representing the Application
+		 * @var \Perseids\IAM\BSP\Identity
+		 */
+		protected $XBambooBPiD = new Identity();
+
+
 
 		/**
 		 * Create and feed the instance with given parameters
 		 *
 		 * @param string $url The URL for the BSP Instance
 		 * @param string $certificates The path to the certificate for the ssl relationship
+		 * 
+		 * @return \Perseids\IAM\BSP\Instance
 		 */
 		function __construct($url = null, $certificates = null) {
 			$this->client = new \GuzzleHttp\Client();
@@ -31,6 +56,23 @@
 			if($certificates !== null) {
 				$this->setCertificates($certificates);
 			}
+			return $this;
+		}
+
+		/**
+		 * Get the headers for HTTP Requests
+		 *
+		 * @param Identity An IAM BSP Identity on behalf of whom we are doing the requests
+		 * @return array Required BSP headers
+		 */
+		private function getHeader(Identity $BambooPerson = null) {
+			if($BambooPerson === null) { $BambooPerson = $this->XBambooBPiD; }
+			$headers = array(
+				"X-Bamboo-BPID" => $BambooPerson->getId(),
+				"X-Bamboo-APPID" => $this->XBambooAppId,
+				"X-Bamboo-ROLES" => $this->XBambooRoles;
+			);
+			return $headers;
 		}
 
 		/**
