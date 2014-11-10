@@ -24,7 +24,7 @@
 		 * @param string $certificates The path to the certificate for the ssl relationship
 		 */
 		function __construct($url = null, $certificates = null) {
-			$this->client = nez \GuzzleHttp\Client();
+			$this->client = new \GuzzleHttp\Client();
 			if($url !== null) {
 				$this->setUrl($url);
 			}
