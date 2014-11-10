@@ -1,0 +1,11 @@
+{
+	"autoload": {
+		"psr-0": {
+			"Perseids/IAM" : "src/"
+		}
+	}
+    "require": {
+        "php": ">=5.2.0",
+        "ext-curl": "*"
+    }
+}
