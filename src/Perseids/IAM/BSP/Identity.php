@@ -2,6 +2,7 @@
 	namespace Perseids\IAM\BSP;
 	
 	use Perseids\IAM\BSP\Schema;
+	use Perseids\IAM\BSP\Instance;
 	use Perseids\IAM\IdP\IdentityProvider;
 
 	class Identity {
@@ -24,8 +25,9 @@
 			return $this->id;
 		}
 
-		function create(){
-			return $this->XML->PersonsCreate($this->IdP, $this);
+		function create(Instance $BSP) {
+			$xml = $this->XML->PersonsCreate($this->IdP, $this);
+			$BSP->request();
 		}
 	}
 ?>

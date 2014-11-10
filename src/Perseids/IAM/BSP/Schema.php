@@ -37,7 +37,7 @@ XML;
 			$sx_sourcedId->children($ns['person'])->sourcedId[0]->sourcedIdKey->userId = $User->getId();
 
 			$xml_prepared = trim(preg_replace('/<\?xml[^>]+>/', '', $sx_sourcedId->asXML()));
-			return $xml;
+			return $xml_prepared;
 		}
 	}
 ?>
