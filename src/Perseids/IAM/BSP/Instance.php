@@ -21,22 +21,22 @@
 		protected $client;
 
 		/**
-		 * [$XBambooRoles description]
+		 * The role for the headers
 		 * @var string
 		 */
-		protected $XBambooRoles = "";
+		protected $BambooRoles = "";
 
 		/**
-		 * [$XBambooAppId description]
+		 * The Bamboo APP ID
 		 * @var string
 		 */
-		protected $XBambooAppId = "";
+		protected $BambooAppId = "";
 
 		/**
 		 * Bamboo Person representing the Application
 		 * @var \Perseids\IAM\BSP\Identity
 		 */
-		protected $XBambooBPiD = new Identity();
+		protected $BambooBPiD = new Identity();
 
 
 
@@ -66,11 +66,11 @@
 		 * @return array Required BSP headers
 		 */
 		private function getHeader(Identity $BambooPerson = null) {
-			if($BambooPerson === null) { $BambooPerson = $this->XBambooBPiD; }
+			if($BambooPerson === null) { $BambooPerson = $this->BambooBPiD; }
 			$headers = array(
 				"X-Bamboo-BPID" => $BambooPerson->getId(),
-				"X-Bamboo-APPID" => $this->XBambooAppId,
-				"X-Bamboo-ROLES" => $this->XBambooRoles;
+				"X-Bamboo-APPID" => $this->BambooAppId,
+				"X-Bamboo-ROLES" => $this->XambooRoles;
 			);
 			return $headers;
 		}
@@ -113,6 +113,94 @@
 		 */
 		function getCertificates($certificates) {
 			return $this->certificates;
+		}
+
+		/**
+		 * Set the Bamboo Person agent for the headers
+		 * 
+		 * @param Identity $BambooPerson The identity on behalf of which we do request
+		 * @return \Perseids\IAM\BSP\Instance
+		 */
+		public function setBambooPerson(Identity $BambooPerson){
+			$this->BambooBPiD = $BambooPerson;
+			return $this;
+		}
+
+		/**
+		 * Get the Bamboo person
+		 * 
+		 * @return \Perseids\IAM\BSP\Identity The identity on behalf of which we do request
+		 */
+		public function getBambooPerson() {
+			return $this->BambooBPiD;
+		}
+
+		/**
+		 * Set the ID of the App doing request to the BSP
+		 * 
+		 * @param string $appId  The ID of the App doing request to the BSP
+		 * @return \Perseids\IAM\BSP\Instance
+		 */
+		public function setBambooAppId(string $appId) {
+			return $this;
+		}
+
+		/**
+		 * Get the ID of the App doing request to the BSP
+		 * 
+		 * @return string The ID of the App doing request to the BSP
+		 */
+		public function getBambooAppId() {
+			return $this->BambooAppId;
+		}
+
+		/**
+		 * Set the Bamboo Roles
+		 * 
+		 * @param string $roles The roles for the headers
+		 * @return \Perseids\IAM\BSP\Instance
+		 */
+		public function setBambooRoles(string $roles) {
+			$this->BambooRoles = $roles;
+			return $this;
+		}
+
+		/**
+		 * Get the Bamboo roles
+		 * @return string The roles for the Headers
+		 */
+		public function getBambooRoles() {
+			return $this->BambooRoles;
+		}
+
+		/**
+		 * Post to a given path of the BSP
+		 * 
+		 * @param  string $url     An URL to post to
+		 * @param  string $mime    The content type of the document
+		 * @param  string $content The content to pose
+		 * @return GuzzleHttp\Message\ResponseInterface           The Guzzle Response
+		 */
+		public function post(string $url, string $mime, string $content) {
+			try {
+
+				$request = $this->client->createRequest("POST", $url, [
+					"headers" => $this->getHeader();
+				]);
+				$request->setBody($content);
+				$request->setHeader("content-type", $mime);
+
+				$response = $this->client->send($request);
+
+				return $reponse;	
+
+			} catch (RequestException $e) {
+
+				if($e->hasResponse()) { $msg = $e->getRequest() . "\n" . $e->getResponse(); } else { $msg = $e->getRequest(); }
+
+				throw Exception($msg);
+			}
+
 		}
 	}
 ?>

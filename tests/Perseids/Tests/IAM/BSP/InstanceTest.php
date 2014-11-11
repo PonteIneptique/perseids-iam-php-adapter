@@ -19,8 +19,7 @@
 			$this->BSP->setUrl($testURL1);
 			
 			//Should have changed
-			$this->assertEquals($testURL1, $this->BSP->getUrl());
-
+			$this->assertEquals($testURL1, $this->BSP->getUrl());#
 		}
 	}
 ?>
