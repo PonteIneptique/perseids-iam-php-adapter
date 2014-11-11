@@ -57,7 +57,7 @@
 			}
 
 			$this->BambooBPiD= new Person();
-
+			$this->setCertificates();
 			return $this;
 		}
 
@@ -102,10 +102,10 @@
 		/**
 		 * Set the Certificate Path of the Instance
 		 *
-		 * @param string $certificates The path to the certificate for the ssl relationship
+		 * @param string,boolean $certificates The path to the certificate for the ssl relationship
 		 * @return \Perseids\IAM\BSP\Instance
 		 */
-		function setCertificates($certificates) {
+		function setCertificates($certificates = true) {
 			$this->certificates = $certificates;
 			return $this;
 		}
@@ -113,9 +113,9 @@
 		/**
 		 * Get the Certificate Path of the Instance
 		 *
-		 * @return string The path to the certificate for the ssl relationship
+		 * @return string,boolean The path to the certificate for the ssl relationship
 		 */
-		function getCertificates($certificates) {
+		function getCertificates() {
 			return $this->certificates;
 		}
 
@@ -188,7 +188,7 @@
 		public function post($url, $mime, $content) {
 			try {
 
-				$request = $this->client->createRequest("POST", $this->getUrl() . $url, ["headers" => $this->getHeader()]);
+				$request = $this->client->createRequest("POST", $this->getUrl() . $url, ["headers" => $this->getHeader(), "verify" => $this->getCertificates()]);
 
 				$content = Stream::factory($content);
 				$request->setBody($content, $mime);

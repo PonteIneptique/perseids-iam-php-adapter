@@ -19,17 +19,18 @@
 				->setId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d")
 				->setIdentityProvider($this->IdP);
 
-			$this->BSP = new Instance("https://services-rep.perseids.org/bsp/");
+			$this->BSP = new Instance("https://services-rep.perseids.org/bsp");
 
 			$this->BSP
 				->setBambooPerson($this->AppPerson)
-				->setBambooAppId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d");
+				->setBambooAppId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d")
+				->setCertificates(false);
 		}
 
 		public function testOverrideOptions() {
 			$testURL1 = "http://localhost";
 
-			$this->assertEquals("https://services-rep.perseids.org/bsp/", $this->BSP->getUrl());
+			$this->assertEquals("https://services-rep.perseids.org/bsp", $this->BSP->getUrl());
 			//Should be default url
 			
 			$this->BSP->setUrl($testURL1);
