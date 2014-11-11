@@ -1,7 +1,7 @@
 <?php
 	namespace Perseids\Tests\IAM\BSP;
 
-	use Perseids\IAM\BSP\Identity;
+	use Perseids\IAM\BSP\Person;
 	use Perseids\IAM\IdP\IdentityProvider;
 	use Perseids\IAM\BSP\Schema;
 
@@ -16,7 +16,7 @@
 
 		public function testXmlCreateIdentity() {
 			$userId = 1;
-			$identity = new Identity($this->IdP);
+			$identity = new Person();
 			$identity->setId($userId);
 
 			$shouldReturn = '<person:bambooPerson xmlns:person="http://projectbamboo.org/bsp/BambooPerson" xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -29,7 +29,7 @@
 	</person:sourcedId>
 </person:bambooPerson>';
 
-			$this->assertEquals($shouldReturn, $identity->create());
+			$this->assertEquals($shouldReturn, $this->Schema->PersonsCreate($this->IdP, $identity));
 		}
 	}
 ?>

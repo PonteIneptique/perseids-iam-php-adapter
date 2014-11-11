@@ -2,7 +2,7 @@
 	namespace Perseids\IAM\BSP;
 
 	use Perseids\IAM\IdP\IdentityProvider;
-	use Perseids\IAM\BSP\Identity;
+	use Perseids\IAM\BSP\Person;
 	
 	class Schema {
 
@@ -16,7 +16,14 @@
 			if (strlen($msg) !== 0) { throw Exception($msg); };
 		}
 
-		public function PersonsCreate(IdentityProvider $IdP, Identity $User) {
+		/**
+		 * Generate the xml required for /persons POST
+		 * 
+		 * @param IdentityProvider $IdP  An Identity Provider
+		 * @param Person           $User A User
+		 * @return string The xml for the return
+		 */
+		public function PersonsCreate(IdentityProvider $IdP, Person $User) {
 			$xml = $this->xmlDeclaration;
 			$xml .=<<<XML
 <person:bambooPerson xmlns:person="http://projectbamboo.org/bsp/BambooPerson" xmlns:xs="http://www.w3.org/2001/XMLSchema">
