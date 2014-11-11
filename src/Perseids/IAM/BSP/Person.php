@@ -58,7 +58,7 @@
 
 		function create(Instance $BSP) {
 			$xml = $this->XML->PersonsCreate($this->getIdentityProvider(), $this);
-			$response = $BSP->post("/persons", "text/xml", $xml);
+			$response = $BSP->post("/persons", "text/xml; charset=UTF-8", $xml);
 			print_r($response);
 		}
 	}

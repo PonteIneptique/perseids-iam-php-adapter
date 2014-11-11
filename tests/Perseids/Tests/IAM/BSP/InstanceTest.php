@@ -12,7 +12,7 @@
 
 
 		protected function setUp() {
-			$this->IdP = new IdentityProvider("http://lascivaroma.com");
+			$this->IdP = new IdentityProvider("http://lascivaroma.com", "LascivaRoma");
 
 			$this->AppPerson = new Person();
 			$this->AppPerson

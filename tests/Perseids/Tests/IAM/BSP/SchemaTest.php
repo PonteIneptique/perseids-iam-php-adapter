@@ -10,7 +10,7 @@
 		protected $Schema;
 
 		protected function setUp() {
-			$this->IdP = new IdentityProvider("http://localhost/IdP");
+			$this->IdP = new IdentityProvider("http://localhost/IdP", "LascivaRoma");
 			$this->Schema = new Schema();
 		}
 
@@ -21,7 +21,7 @@
 
 			$shouldReturn = '<person:bambooPerson xmlns:person="http://projectbamboo.org/bsp/BambooPerson" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<person:sourcedId>
-		<person:sourcedIdName/>
+		<person:sourcedIdName>LascivaRoma</person:sourcedIdName>
 		<person:sourcedIdKey>
 		<person:idPId>http://localhost/IdP</person:idPId>
 		<person:userId>1</person:userId>

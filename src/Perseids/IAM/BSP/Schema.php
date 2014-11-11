@@ -21,7 +21,7 @@
 		 * 
 		 * @param IdentityProvider $IdP  An Identity Provider
 		 * @param Person           $User A User
-		 * @return string The xml for the return
+		 * @return string The xml for the 
 		 */
 		public function PersonsCreate(IdentityProvider $IdP, Person $User) {
 			$xml = $this->xmlDeclaration;
@@ -40,6 +40,7 @@ XML;
 			$this->simplexml_error($sx_sourcedId);
 			$ns = $sx_sourcedId->getDocNamespaces(TRUE);
 
+			$sx_sourcedId->children($ns['person'])->sourcedId[0]->sourcedIdName = $IdP->getName();
 			$sx_sourcedId->children($ns['person'])->sourcedId[0]->sourcedIdKey->idPId = $IdP->getUrl();
 			$sx_sourcedId->children($ns['person'])->sourcedId[0]->sourcedIdKey->userId = $User->getId();
 

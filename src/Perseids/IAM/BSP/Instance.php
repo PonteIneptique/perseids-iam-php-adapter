@@ -40,7 +40,10 @@
 		 */
 		protected $BambooBPiD;
 
-
+		/**
+		 * @var array
+		 */
+		protected $streamContext = array();
 
 		/**
 		 * Create and feed the instance with given parameters
@@ -71,7 +74,7 @@
 			if($BambooPerson === null) { $BambooPerson = $this->BambooBPiD; }
 			$headers = array(
 				"X-Bamboo-BPID" => $BambooPerson->getId(),
-				"X-Bamboo-APPID" => $this->BambooAppId
+				"X-Bamboo-AppID" => $this->BambooAppId
 			);
 			if(!empty($this->BambooRoles)) {
 				$headers["X-Bamboo-ROLES"] = $this->BambooRoles;
@@ -146,6 +149,7 @@
 		 * @return \Perseids\IAM\BSP\Instance
 		 */
 		public function setBambooAppId($appId) {
+			$this->BambooAppId = $appId;
 			return $this;
 		}
 
@@ -178,6 +182,20 @@
 		}
 
 		/**
+		 * [setStreamContext description]
+		 * @param [type] $context [description]
+		 * @return \Perseids\IAM\BSP\Instance
+		 */
+		public function setStreamContext($context) {
+			$this->streamContext = $context;
+			return $this;
+		}
+
+		public function getStreamContext() {
+			return $this->streamContext;
+		}
+
+		/**
 		 * Post to a given path of the BSP
 		 * 
 		 * @param  string $url     An URL to post to
@@ -188,20 +206,28 @@
 		public function post($url, $mime, $content) {
 			try {
 
-				$request = $this->client->createRequest("POST", $this->getUrl() . $url, ["headers" => $this->getHeader(), "verify" => $this->getCertificates()]);
+				$config = [
+					"headers" => $this->getHeader(),
+					"verify" => $this->getCertificates(),
+					"config" => [
+		        		'stream_context' => $this->getStreamContext()
+					]
+				];
+				$request = $this->client->createRequest("POST", $this->getUrl() . $url, $config);
 
 				$content = Stream::factory($content);
 				$request->setBody($content, $mime);
+				$request->setHeader('Content-Type', $mime);
 
 				$response = $this->client->send($request);
 
 				return $reponse;	
 
-			} catch (RequestException $e) {
+			} catch (\GuzzleHttp\Exception\ClientException $e) {
 
 				if($e->hasResponse()) { $msg = $e->getRequest() . "\n" . $e->getResponse(); } else { $msg = $e->getRequest(); }
-
-				throw Exception($msg);
+				print_r( $msg);
+				throw new \Exception($msg);
 			}
 
 		}
