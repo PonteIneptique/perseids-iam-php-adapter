@@ -6,3 +6,13 @@ This project is a test to convert the [Bamboo attempt](http://svn.code.sf.net/p/
 
 #Composer
 To install the dependency, use the simple `composer install` command in the root folder.
+
+#PFX files
+If you have pfx files instead of pem, the https curl client won't accept it. To turn it to PEM, assuming your file is named `my_selfsigned.pfx`, open a terminal in its folder and type :
+
+```
+openssl
+pkcs12 -in my_selfsigned.pfx  -out client.pem -clcerts
+pkcs12 -in my_selfsigned.pfx  -out root.pem -cacerts
+exit
+``` 
