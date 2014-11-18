@@ -11,8 +11,5 @@ To install the dependency, use the simple `composer install` command in the root
 If you have pfx files instead of pem, the https curl client won't accept it. To turn it to PEM, assuming your file is named `my_selfsigned.pfx`, open a terminal in its folder and type :
 
 ```
-openssl
-pkcs12 -in my_selfsigned.pfx  -out client.pem -clcerts
-pkcs12 -in my_selfsigned.pfx  -out root.pem -cacerts
-exit
+openssl pkcs12 -in client-certificate.pfx -out client-certificate.pem -nodes
 ``` 

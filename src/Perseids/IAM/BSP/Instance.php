@@ -248,6 +248,28 @@
 			return $this->streamContext;
 		}
 
+		private function getConfig() {
+			$config = [
+				"headers" => $this->getHeader(),
+				"config" => [
+					'stream_context' => $this->getStreamContext()
+				]
+			];
+
+			if($this->getVerify() !== true) {
+				$config["verify"] = $this->getVerify();
+			}
+
+			if($this->getCertificate()) {
+				$config["cert"] = $this->getCertificate();
+			}
+
+			if($this->getSSL_Key()) {
+				$config["ssl_key"] = $this->getSSL_Key();
+			}
+			return $config;
+		}
+
 		/**
 		 * Post to a given path of the BSP
 		 * 
@@ -259,26 +281,8 @@
 		public function post($url, $mime, $content) {
 			try {
 
-				$config = [
-					"headers" => $this->getHeader(),
-					"config" => [
-		        		'stream_context' => $this->getStreamContext()
-					]
-				];
 
-				if($this->getVerify() !== true) {
-					$config["verify"] = $this->getVerify();
-				}
-
-				if($this->getCertificate()) {
-					$config["cert"] = $this->getCertificate();
-				}
-
-				if($this->getSSL_Key()) {
-					$config["ssl_key"] = $this->getSSL_Key();
-				}
-
-				$request = $this->client->createRequest("POST", $this->getUrl() . $url, $config);
+				$request = $this->client->createRequest("POST", $this->getUrl() . $url, $this->getConfig());
 
 				$content = Stream::factory($content);
 				$request->setBody($content, $mime);
