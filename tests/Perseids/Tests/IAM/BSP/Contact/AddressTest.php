@@ -10,4 +10,10 @@
 			$expected = "<contacts:addresses>\n<contacts:country>France</contacts:country>\n\n</contacts:addresses>";
 			$this->assertEquals($expected, $address->getXML());
 		}
+		public function testSerialized() {
+			$address = new Address();
+			$address->setCountry("France");
+			$expected = array("country" => "France");
+			$this->assertEquals($expected, $address->getSerialized());
+		}
 	}
