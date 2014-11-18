@@ -24,7 +24,8 @@
 			$this->BSP
 				->setBambooPerson($this->AppPerson)
 				->setBambooAppId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d")
-				->setCertificates(false);
+				->setVerify(false)
+				->setCertificates(__DIR__ . "/../../../../../certificate/perseids.pfx");
 		}
 
 		public function testOverrideOptions() {

@@ -11,10 +11,15 @@
 		protected $url = "http://services-rep.perseids.org/bsp";
 
 		/**
+		 * Verify Option for Guzzle [ http://guzzle.readthedocs.org/en/latest/clients.html#verify-option ]
+		 * @var boolean, string
+		 */
+		protected $verify = true;
+		/**
 		 * The pass to the ssl certificates
 		 * @var string 
 		 */
-		protected $certificates = null;
+		protected $certificate = false;
 
 		/** 
 		 * A guzzle client to make http request
@@ -60,6 +65,7 @@
 			}
 
 			$this->BambooBPiD= new Person();
+			$this->setVerify();
 			$this->setCertificates();
 			return $this;
 		}
@@ -103,13 +109,33 @@
 		}
 
 		/**
+		 * Set the Verify of the Instance
+		 *
+		 * @param string $verify The Verify option of the Guzzle client for SSL connections
+		 * @return \Perseids\IAM\BSP\Instance
+		 */
+		function setVerify($verify = false) {
+			$this->verify = $verify;
+			return $this;
+		}
+
+		/**
+		 * Get The Verify option of the Guzzle client for SSL connections
+		 *
+		 * @return string
+		 */
+		function getVerify() {
+			return $this->verify;
+		}
+
+		/**
 		 * Set the Certificate Path of the Instance
 		 *
 		 * @param string,boolean $certificates The path to the certificate for the ssl relationship
 		 * @return \Perseids\IAM\BSP\Instance
 		 */
-		function setCertificates($certificates = true) {
-			$this->certificates = $certificates;
+		function setCertificates($certificate = false) {
+			$this->certificate = $certificate;
 			return $this;
 		}
 
@@ -118,8 +144,8 @@
 		 *
 		 * @return string,boolean The path to the certificate for the ssl relationship
 		 */
-		function getCertificates() {
-			return $this->certificates;
+		function getCertificate() {
+			return $this->certificate;
 		}
 
 		/**
@@ -208,11 +234,14 @@
 
 				$config = [
 					"headers" => $this->getHeader(),
-					"verify" => $this->getCertificates(),
+					"verify" => $this->getVerify(),
 					"config" => [
 		        		'stream_context' => $this->getStreamContext()
 					]
 				];
+				if($this->getCertificate()) {
+					$config["cert"] = [$this->getCertificate(), ""];
+				}
 				$request = $this->client->createRequest("POST", $this->getUrl() . $url, $config);
 
 				$content = Stream::factory($content);
