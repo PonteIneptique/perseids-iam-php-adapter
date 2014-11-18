@@ -15,11 +15,18 @@
 		 * @var boolean, string
 		 */
 		protected $verify = true;
+
 		/**
-		 * The pass to the ssl certificates
-		 * @var string 
+		 * The pass to the ssl certificates [ http://guzzle.readthedocs.org/en/latest/clients.html#cert ]
+		 * @var boolean,string,array
 		 */
 		protected $certificate = false;
+
+		/**
+		 * Private SSL key in PEM format [ http://guzzle.readthedocs.org/en/latest/clients.html#ssl-key ]
+		 * @var boolean,string,array
+		 */
+		protected $sslKey = false;
 
 		/** 
 		 * A guzzle client to make http request
@@ -66,7 +73,7 @@
 
 			$this->BambooBPiD= new Person();
 			$this->setVerify();
-			$this->setCertificates();
+			$this->setCertificate();
 			return $this;
 		}
 
@@ -114,7 +121,7 @@
 		 * @param string $verify The Verify option of the Guzzle client for SSL connections
 		 * @return \Perseids\IAM\BSP\Instance
 		 */
-		function setVerify($verify = false) {
+		function setVerify($verify = true) {
 			$this->verify = $verify;
 			return $this;
 		}
@@ -129,12 +136,32 @@
 		}
 
 		/**
-		 * Set the Certificate Path of the Instance
+		 * Set the Private SSL key in PEM format of the Instance
 		 *
-		 * @param string,boolean $certificates The path to the certificate for the ssl relationship
+		 * @param string,boolean,array $sslKeys Private SSL key in PEM format. String for a path, array(path, password) or false if not required
 		 * @return \Perseids\IAM\BSP\Instance
 		 */
-		function setCertificates($certificate = false) {
+		function setSSL_Key($sslKey = false) {
+			$this->sslKey = $sslKey;
+			return $this;
+		}
+
+		/**
+		 * Get the Private SSL key in PEM format of the Instance
+		 *
+		 * @return string,boolean The path to the sslKey for the ssl relationship
+		 */
+		function getSSL_Key() {
+			return $this->sslKey;
+		}
+
+		/**
+		 * Set the Certificate Path of the Instance
+		 *
+		 * @param string,boolean,array $certificates The path to the certificate for the ssl relationship
+		 * @return \Perseids\IAM\BSP\Instance
+		 */
+		function setCertificate($certificate = false) {
 			$this->certificate = $certificate;
 			return $this;
 		}
@@ -234,14 +261,23 @@
 
 				$config = [
 					"headers" => $this->getHeader(),
-					"verify" => $this->getVerify(),
 					"config" => [
 		        		'stream_context' => $this->getStreamContext()
 					]
 				];
-				if($this->getCertificate()) {
-					$config["cert"] = [$this->getCertificate(), ""];
+
+				if($this->getVerify() !== true) {
+					$config["verify"] = $this->getVerify();
 				}
+
+				if($this->getCertificate()) {
+					$config["cert"] = $this->getCertificate();
+				}
+
+				if($this->getSSL_Key()) {
+					$config["ssl_key"] = $this->getSSL_Key();
+				}
+
 				$request = $this->client->createRequest("POST", $this->getUrl() . $url, $config);
 
 				$content = Stream::factory($content);
@@ -249,8 +285,7 @@
 				$request->setHeader('Content-Type', $mime);
 
 				$response = $this->client->send($request);
-
-				return $reponse;	
+				return $response;	
 
 			} catch (\GuzzleHttp\Exception\ClientException $e) {
 

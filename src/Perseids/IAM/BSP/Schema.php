@@ -30,9 +30,9 @@
 	<person:sourcedId>
 		<person:sourcedIdName></person:sourcedIdName>
 		<person:sourcedIdKey>
-		<person:idPId></person:idPId>
-		<person:userId></person:userId>
-	</person:sourcedIdKey>
+			<person:idPId></person:idPId>
+			<person:userId></person:userId>
+		</person:sourcedIdKey>
 	</person:sourcedId>
 </person:bambooPerson>
 XML;

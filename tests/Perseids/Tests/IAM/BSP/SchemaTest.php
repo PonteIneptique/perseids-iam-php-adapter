@@ -23,9 +23,9 @@
 	<person:sourcedId>
 		<person:sourcedIdName>LascivaRoma</person:sourcedIdName>
 		<person:sourcedIdKey>
-		<person:idPId>http://localhost/IdP</person:idPId>
-		<person:userId>1</person:userId>
-	</person:sourcedIdKey>
+			<person:idPId>http://localhost/IdP</person:idPId>
+			<person:userId>1</person:userId>
+		</person:sourcedIdKey>
 	</person:sourcedId>
 </person:bambooPerson>';
 

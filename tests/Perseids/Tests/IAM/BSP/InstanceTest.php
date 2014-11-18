@@ -6,10 +6,11 @@
 	use Perseids\IAM\IdP\IdentityProvider;
 
 	class InstanceTest extends \PHPUnit_Framework_TestCase {
+		/*
 		protected $BSP;
 		protected $AppPerson;
 		protected $IdP;
-
+		*/
 
 		protected function setUp() {
 			$this->IdP = new IdentityProvider("http://lascivaroma.com", "LascivaRoma");
@@ -25,7 +26,7 @@
 				->setBambooPerson($this->AppPerson)
 				->setBambooAppId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d")
 				->setVerify(false)
-				->setCertificates(__DIR__ . "/../../../../../certificate/perseids.pfx");
+				->setCertificate(__DIR__ . "/../../../../../certificate/file.pem");
 		}
 
 		public function testOverrideOptions() {

@@ -46,7 +46,7 @@
 		public function setId($id) {
 			$this->id = $id;
 			return $this;
-		}
+		} 
 
 		/**
 		 * [getId description]
@@ -56,10 +56,46 @@
 			return $this->id;
 		}
 
+		/**
+		 * [setBSPUuid description]
+		 * @param string $BSPUuid [description]
+		 */
+		public function setBSPUuid($BSPUuid) {
+			$this->BSPUuid = $BSPUuid;
+			return $this;
+		} 
+
+		/**
+		 * [getBSPUuid description]
+		 * @return string The BSP UUID of our person
+		 */
+		public function getBSPUuid() {
+			return $this->BSPUuid;
+		}
+
+		/**
+		 * Turns a url to a readable uuid
+		 * @param string $url A url given by the BSP
+		 * @param string $path The path used to post data
+		 * 
+		 * @return string $uuid A UUID
+		 */
+		private function URLtoUUID($url, $path) {
+			$regexp = "/" . str_replace("/", "\\/", $path) . "\/urn\:uuid\:(?P<uuid>.*)/";
+			preg_match($regexp, $url, $matches);
+			$uuid = $matches["uuid"];
+
+			return $uuid;
+		}
+
 		function create(Instance $BSP) {
 			$xml = $this->XML->PersonsCreate($this->getIdentityProvider(), $this);
 			$response = $BSP->post("/persons", "text/xml; charset=UTF-8", $xml);
-			print_r($response);
+			if($response->getStatusCode() === 201) {
+				$uuid = $this->URLtoUUID($response->getHeader("location"), "/persons");
+				$this->setBSPUuid($uuid);
+			}
+			return false;
 		}
 	}
 ?>
