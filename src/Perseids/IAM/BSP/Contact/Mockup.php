@@ -28,7 +28,7 @@
 			$inside = "";
 			$object = $this->getSerialized();
 			while(list($key, $value) = each($object)) {
-				$inside .= $this->createNode($this->namespace, $key, $value, $lb = "");
+				$inside .= $this->createNode($this->namespace, $key, $value, $lb = false);
 			}
 			$xml = $this->createNode($this->namespace, $this->node, $inside);
 
@@ -40,13 +40,15 @@
 		 * @param  string $namespace The namespace of the node
 		 * @param  string $name      The name of the node
 		 * @param  string $value     The value of the node
-		 * @param  string $lb        How to encapsulate our value
+		 * @param  boolean $lb        If adding \n to value
 		 * @return string            An XML node
 		 */
-		private function createNode($namespace, $name, $value, $lb = "\n") {
+		private function createNode($namespace, $name, $value, $lb = true) {
+			if($lb === true) { $n1 = "\n"; $n2 = "";}
+			else { $n1 = ""; $n2 = "\n";}
 			$xml  = "<".$namespace.":".$name.">";
-			$xml .= $lb.$value.$lb;
-			$xml .= "</".$namespace.":".$name.">\n";
+			$xml .= $n1.$value.$n1;
+			$xml .= "</".$namespace.":".$name.">".$n2;
 			return $xml;
 		}
 
