@@ -6,10 +6,67 @@
 		 * The Namespace used for the xml
 		 * @var string
 		 */
-		protected $namespace = "person";
-		
+		protected $namespace = "contacts";
+
 		/**
-		 * Set the namespace of thje object
+		 * The name for the mother node
+		 * @var string
+		 */
+		protected $node = "mockup";
+
+		/**
+		 * Serialization excluded vars
+		 * @var array
+		 */
+		protected $excludeSerialization = ["namespace", "node", "excludeSerialization"];
+
+		/**
+		 * Returns XML for content
+		 * @return string The XML representation of the element
+		 */
+		public function getXML() {
+			$inside = "";
+			$object = $this->getSerialized();
+			while(list($key, $value) = each($object)) {
+				$inside .= $this->createNode($this->namespace, $key, $value, $lb = "");
+			}
+			$xml = $this->createNode($this->namespace, $this->node, $inside);
+
+			return $xml;
+		}
+
+		/**
+		 * Create an XML node
+		 * @param  string $namespace The namespace of the node
+		 * @param  string $name      The name of the node
+		 * @param  string $value     The value of the node
+		 * @param  string $lb        How to encapsulate our value
+		 * @return string            An XML node
+		 */
+		private function createNode($namespace, $name, $value, $lb = "\n") {
+			$xml  = "<".$namespace.":".$name.">";
+			$xml .= $lb.$value.$lb;
+			$xml .= "</".$namespace.":".$name.">\n";
+			return $xml;
+		}
+
+		/**
+		 * Get an associative array version of the object without excluded variable set in $excludeSerialization
+		 * @return	array	An associative array version of the object
+		 */
+		public function getSerialized() {
+			$rtn = [];
+			$serialized = get_object_vars($this);
+			while(list($key, $value) = each($serialized)) {
+				if(array_search($key, $this->excludeSerialization, $strict = TRUE) === false && is_string($value)) {
+					$rtn[$key] = $value;
+				}
+			}
+			return $rtn;
+		}
+
+		/**
+		 * Set the namespace of the object
 		 * @param string $namespace The namespace to be used
 		 * @return this
 		 */
@@ -19,10 +76,12 @@
 		}
 
 		/**
-		 * Returns XML for content
-		 * @return [type] [description]
+		 * Exclude an element from serialization
+		 * @param string A key
+		 * @return this
 		 */
-		public function getXML() {
-			return $xml;
+		public function addExclusion($string) {
+			$this->excludeSerialization[] = $string;
+			return $this;
 		}
 	}

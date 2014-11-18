@@ -46,7 +46,7 @@
 			$testPerson = new Person();
 			$testPerson->setId($randomHash);
 			$testPerson->setIdentityProvider($this->IdP);
-			$testPerson->create($this->BSP);
+			//$testPerson->create($this->BSP);
 
 		}
 	}
