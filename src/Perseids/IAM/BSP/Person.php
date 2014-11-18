@@ -10,6 +10,7 @@
 		protected $XML;
 		protected $IdP;
 		protected $id;
+		protected $BSPUuid;
 
 		/**
 		 * Generate the object
