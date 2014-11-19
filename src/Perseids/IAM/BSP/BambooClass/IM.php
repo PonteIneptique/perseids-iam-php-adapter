@@ -45,7 +45,7 @@
 			$this->addExclusion("locationTypeEnum");
 			$this->addExclusion("instantMessagingTypeEnum");
 		}
-		
+
 		/**
 		 * Gets the The name of the mother node.
 		 *
