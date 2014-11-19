@@ -25,12 +25,12 @@
 		 * @return string The XML representation of the element
 		 */
 		public function getXML() {
-			$inside = "";
 			$object = $this->getSerialized($deepSerialization = FALSE);
+			$xml = array();
 			while(list($key, $value) = each($object)) {
-				$inside .= $this->createNode($this->namespace, $key, $value, $lb = false);
+				$xml[] = $this->createNode($this->namespace, $key, $value, false);
 			}
-			$xml = $this->createNode($this->namespace, $this->node, $inside);
+			$xml = $this->createNode($this->namespace, $this->node, implode("\n", $xml), true);
 
 			return $xml;
 		}
@@ -40,44 +40,44 @@
 		 * @param  string $namespace The namespace of the node
 		 * @param  string $name      The name of the node
 		 * @param  string $value     The value of the node
-		 * @param  boolean $lb        If adding \n to value
+		 * @param  boolean $lb        If adding \n to to encapsulate the value
 		 * @return string            An XML node
 		 */
-		private function createNode($namespace, $name, $value, $lb = true) {
-			if($lb === true) { $n1 = "\n"; $n2 = "";}
-			else { $n1 = ""; $n2 = "\n";}
-
-
-			$xml = "";
+		private function createNode($namespace, $name, $value, $lb = false) {
+			$xml = array();
 			switch (gettype($value)) {
 				case "array":
 					while(list($key, $subvalue) = each($value)) {
 						switch (gettype($key)) {
 							case "integer":
-								$xml .= $this->createNode($namespace, $name, $subvalue, $lb = true);
+								$xml[] = $this->createNode($namespace, $name, $subvalue, $lb = true);
 								break;
 							case "string":
-								$xml .=  $this->createNode($namespace, $key, $subvalue, $lb = true);
+								$xml[] =  $this->createNode($namespace, $key, $subvalue, $lb = true);
 								break;
 							default:
-								print_r(gettype($key));
 								break;
 						}
 					}
 					break;
 				case "string":
 				case "integer":
-					$xml  = "<".$namespace.":".$name.">";
-					$xml .= $n1.$value.$n1;
-					$xml .= "</".$namespace.":".$name.">".$n2;
+
+					if($lb === true) {
+						$xml[] = "<".$namespace.":".$name.">\n".$value."\n</".$namespace.":".$name.">";
+					} else {
+						$xml[] = "<".$namespace.":".$name.">".$value."</".$namespace.":".$name.">";
+					}
 					break;
 				case "object":
 					if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
-						$xml .= $value->getXML();
+						$xml[] = $value->getXML();
 					}
+					break;
 				default:
 					break;
 			}
+			$xml = implode("\n", $xml);
 			return $xml;
 		}
 

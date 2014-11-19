@@ -10,7 +10,7 @@
 			$name = new Name();
 			$name->setFamilyName("Doe")
 				 ->setGivenName("John");
-			$expected = "<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n\n</contacts:name>";
+			$expected = "<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n</contacts:name>";
 			$this->assertEquals($expected, $name->getXML());
 		}
 
@@ -69,7 +69,7 @@
 			$partname[1]->setPartNameLang("English");
 
 			$name->setPartName($partname);
-			print_r($name->getXML());
-			//$this->assertEquals($expected, $name->getXML());
+			$expected = "<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n<contacts:partName>\n<contacts:partName>Test</contacts:partName>\n<contacts:partNameLang>French</contacts:partNameLang>\n</contacts:partName>\n<contacts:partName>\n<contacts:partName>Louie</contacts:partName>\n<contacts:partNameLang>English</contacts:partNameLang>\n</contacts:partName>\n</contacts:name>";
+			$this->assertEquals($expected, $name->getXML());
 		}
 	}

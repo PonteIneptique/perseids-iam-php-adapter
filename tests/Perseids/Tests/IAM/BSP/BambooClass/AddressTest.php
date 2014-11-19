@@ -7,7 +7,7 @@
 		public function testXML() {
 			$address = new Address();
 			$address->setCountry("France");
-			$expected = "<contacts:addresses>\n<contacts:country>France</contacts:country>\n\n</contacts:addresses>";
+			$expected = "<contacts:addresses>\n<contacts:country>France</contacts:country>\n</contacts:addresses>";
 			$this->assertEquals($expected, $address->getXML());
 		}
 		public function testSerialized() {

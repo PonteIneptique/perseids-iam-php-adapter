@@ -9,7 +9,7 @@
 			$tel
 				->setTelephoneNumber("123")
 				->setTelephoneType("FAX");
-			$expected = "<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n\n</contacts:telephone>";
+			$expected = "<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>";
 			$this->assertEquals($expected, $tel->getXML());
 		}
 		public function testSerialized() {
