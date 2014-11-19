@@ -71,7 +71,11 @@
 					break;
 				case "object":
 					if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
-						$xml[] = $value->getXML();
+						if(method_exists($value, "getUuid")) {
+							$xml[] = "<".$namespace.":".$name.">".$value->getUUID()."</".$namespace.":".$name.">";
+						} else {
+							$xml[] = $value->getXML();
+						}
 					}
 					break;
 				default:
