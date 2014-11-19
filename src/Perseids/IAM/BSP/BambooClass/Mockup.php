@@ -25,7 +25,7 @@
 		 * @return string The XML representation of the element
 		 */
 		public function getXML() {
-			$object = $this->getSerialized($deepSerialization = FALSE);
+			$object = $this->getSerialized($deepSerialization = false);
 			$xml = array();
 			while(list($key, $value) = each($object)) {
 				$xml[] = $this->createNode($this->namespace, $key, $value, false);
@@ -50,10 +50,10 @@
 					while(list($key, $subvalue) = each($value)) {
 						switch (gettype($key)) {
 							case "integer":
-								$xml[] = $this->createNode($namespace, $name, $subvalue, $lb = true);
+								$xml[] = $this->createNode($namespace, $name, $subvalue);
 								break;
 							case "string":
-								$xml[] =  $this->createNode($namespace, $key, $subvalue, $lb = true);
+								$xml[] =  $this->createNode($namespace, $key, $subvalue);
 								break;
 							default:
 								break;
@@ -62,7 +62,6 @@
 					break;
 				case "string":
 				case "integer":
-
 					if($lb === true) {
 						$xml[] = "<".$namespace.":".$name.">\n".$value."\n</".$namespace.":".$name.">";
 					} else {
@@ -71,7 +70,7 @@
 					break;
 				case "object":
 					if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
-						if(method_exists($value, "getUuid")) {
+						if(method_exists($value, "getUUID") === true && $value->getUUID() !== null) {
 							$xml[] = "<".$namespace.":".$name.">".$value->getUUID()."</".$namespace.":".$name.">";
 						} else {
 							$xml[] = $value->getXML();
@@ -89,16 +88,16 @@
 		 * Get an associative array version of the object without excluded variable set in $excludeSerialization
 		 * @return	array	An associative array version of the object
 		 */
-		public function getSerialized($deepSerialization = TRUE) {
+		public function getSerialized($deepSerialization = true) {
 			$serialized = get_object_vars($this);
 			$rtn = $this->serialize($serialized, $deepSerialization);
 			return $rtn;
 		}
 
-		private function serialize($serialized, $deepSerialization = TRUE) {
+		private function serialize($serialized, $deepSerialization = true) {
 			$rtn = [];
 			while(list($key, $value) = each($serialized)) {
-				if(array_search($key, $this->excludeSerialization, $strict = TRUE) === false && $value !== null) {
+				if(array_search($key, $this->excludeSerialization, $strict = true) === false && $value !== null) {
 					switch (gettype($value)) {
 						case "string":
 						case "integer":
@@ -114,8 +113,10 @@
 							}
 							break;
 						case "object":
-							if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
+							if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup" && $deepSerialization === true) {
 								$rtn[$key] = $value->getSerialized();
+							} else {
+								$rtn[$key] = $value;
 							}
 							break;
 						default:

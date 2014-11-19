@@ -10,15 +10,16 @@
 	use Perseids\IAM\BSP\BambooClass\Telephone;
 
 	class ContactTest extends \PHPUnit_Framework_TestCase {
-		public function testXML() {
+		protected function setUp() {
+
 			$name = new Name();
 			$name->setFamilyName("Doe")
 				 ->setGivenName("John");
 
 			$partname = array();
-				$partname[1] = new PartName();
-				$partname[1]->setPartName("Louie");
-				$partname[1]->setPartNameLang("English");
+				$partname[0] = new PartName();
+				$partname[0]->setPartName("Louie");
+				$partname[0]->setPartNameLang("English");
 			$name->setPartName($partname);
 
 			$address = new Address();
@@ -34,15 +35,51 @@
 				->setTelephoneNumber("123")
 				->setTelephoneType("FAX");
 
-			$contact = new Contact();
-			$contact
+			$this->contact = new Contact();
+			$this->contact
 				->setName($name)
 				->setDisplayName("JohnDoe123")
 				->setEmail(array("johndoe@aoldied.com"))
 				->setIMs(array($IM))
 				->setTelephone(array($tel));
+		}
+		public function testXML() {
+			$expected = "<contacts:bambooContact>\n<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n<contacts:partName>\n<contacts:partName>Louie</contacts:partName>\n<contacts:partNameLang>English</contacts:partNameLang>\n</contacts:partName>\n</contacts:name>\n<contacts:displayName>JohnDoe123</contacts:displayName>\n<contacts:email>johndoe@aoldied.com</contacts:email>\n<contacts:iMs>\n<contacts:instantMessagingType>SKYPE</contacts:instantMessagingType>\n<contacts:account>johndoe</contacts:account>\n<contacts:locationType>WORK</contacts:locationType>\n</contacts:iMs>\n<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>\n</contacts:bambooContact>";
+			$xml = $this->contact->getXML();
+			$this->assertEquals($expected, $xml);
+		}
 
-			print_r($contact->getXML());
-
+		public function testSerialize() {
+			$expected = array(
+				"name" => array(
+					"familyName" => "Doe",
+					"givenName" => "John",
+					"partName" => array(
+						0 => array(
+							"partName" => "Louie",
+							"partNameLang" => "English"
+						)
+					)
+				),
+				"displayName" => "JohnDoe123",
+				"email" => array(
+					0 => "johndoe@aoldied.com"
+				),
+				"IMs" => array(
+					0 => array(
+						"instantMessagingType" => "SKYPE",
+						"account" => "johndoe",
+						"locationType" => "WORK"
+					)
+				),
+				"telephone" => array(
+					0 => array(
+						"telephoneNumber" => "123",
+						"telephoneType" => "FAX",
+					)
+				)
+				);
+			$array = $this->contact->getSerialized();
+			$this->assertEquals($expected, $array);
 		}
 	}
