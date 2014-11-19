@@ -26,7 +26,7 @@
 		 */
 		public function getXML() {
 			$inside = "";
-			$object = $this->getSerialized();
+			$object = $this->getSerialized($deepSerialization = FALSE);
 			while(list($key, $value) = each($object)) {
 				$inside .= $this->createNode($this->namespace, $key, $value, $lb = false);
 			}
@@ -82,11 +82,15 @@
 		 * Get an associative array version of the object without excluded variable set in $excludeSerialization
 		 * @return	array	An associative array version of the object
 		 */
-		public function getSerialized() {
-			$rtn = [];
+		public function getSerialized($deepSerialization = TRUE) {
 			$serialized = get_object_vars($this);
-			while(list($key, $value) = each($serialized)) {
+			$rtn = $this->serialize($serialized, $deepSerialization);
+			return $rtn;
+		}
 
+		private function serialize($serialized, $deepSerialization = TRUE) {
+			$rtn = [];
+			while(list($key, $value) = each($serialized)) {
 				if(array_search($key, $this->excludeSerialization, $strict = TRUE) === false && $value !== null) {
 					switch (gettype($value)) {
 						case "string":
@@ -95,9 +99,18 @@
 							break;
 						case "array":
 							if(count($value) > 0) {
-								$rtn[$key] = $value;
+								if($deepSerialization) {
+									$rtn[$key] = $this->serialize($value);
+								} else {
+									$rtn[$key] = $value;
+								}
 							}
 							break;
+						case "object":
+							if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
+								print_r("Get Parent Class workds \n");
+								$rtn[$key] = $value->getSerialized();
+							}
 						default:
 							break;
 					}
