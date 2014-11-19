@@ -46,9 +46,35 @@
 		private function createNode($namespace, $name, $value, $lb = true) {
 			if($lb === true) { $n1 = "\n"; $n2 = "";}
 			else { $n1 = ""; $n2 = "\n";}
-			$xml  = "<".$namespace.":".$name.">";
-			$xml .= $n1.$value.$n1;
-			$xml .= "</".$namespace.":".$name.">".$n2;
+
+
+			$xml = "";
+			switch (gettype($value)) {
+				case "array":
+					while(list($key, $subvalue) = each($value)) {
+						switch (gettype($key)) {
+							case "int":
+								$xml .= $this->createNode($namespace, $name, $subvalue, $lb = true);
+								break;
+							case "string":
+								$xml .=  $this->createNode($namespace, $key, $subvalue, $lb = true);
+								break;
+							default:
+								break;
+						}
+					}
+					break;
+				case "string":
+				case "int":
+					$xml  = "<".$namespace.":".$name.">";
+					$xml .= $n1.$value.$n1;
+					$xml .= "</".$namespace.":".$name.">".$n2;
+					break;
+				default:
+					print(gettype($value));
+					break;
+			}
+
 			return $xml;
 		}
 
@@ -60,8 +86,21 @@
 			$rtn = [];
 			$serialized = get_object_vars($this);
 			while(list($key, $value) = each($serialized)) {
-				if(array_search($key, $this->excludeSerialization, $strict = TRUE) === false && is_string($value)) {
-					$rtn[$key] = $value;
+
+				if(array_search($key, $this->excludeSerialization, $strict = TRUE) === false && $value !== null) {
+					switch (gettype($value)) {
+						case "string":
+						case "int":
+							$rtn[$key] = $value;
+							break;
+						case "array":
+							if(count($value) > 0) {
+								$rtn[$key] = $value;
+							}
+							break;
+						default:
+							break;
+					}
 				}
 			}
 			return $rtn;
