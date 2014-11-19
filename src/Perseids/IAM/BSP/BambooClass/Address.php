@@ -1,7 +1,7 @@
 <?php
-	namespace Perseids\IAM\BSP\Contact;
+	namespace Perseids\IAM\BSP\BambooClass;
 
-	use Perseids\IAM\BSP\Contact\Mockup;
+	use Perseids\IAM\BSP\BambooClass\Mockup;
 
 	class Address extends Mockup {
 		/**

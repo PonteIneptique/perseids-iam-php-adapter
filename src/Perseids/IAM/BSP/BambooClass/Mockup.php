@@ -1,5 +1,5 @@
 <?php
-	namespace Perseids\IAM\BSP\Contact;
+	namespace Perseids\IAM\BSP\BambooClass;
 
 	class Mockup {
 		/**
