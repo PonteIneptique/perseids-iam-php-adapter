@@ -53,28 +53,31 @@
 				case "array":
 					while(list($key, $subvalue) = each($value)) {
 						switch (gettype($key)) {
-							case "int":
+							case "integer":
 								$xml .= $this->createNode($namespace, $name, $subvalue, $lb = true);
 								break;
 							case "string":
 								$xml .=  $this->createNode($namespace, $key, $subvalue, $lb = true);
 								break;
 							default:
+								print_r(gettype($key));
 								break;
 						}
 					}
 					break;
 				case "string":
-				case "int":
+				case "integer":
 					$xml  = "<".$namespace.":".$name.">";
 					$xml .= $n1.$value.$n1;
 					$xml .= "</".$namespace.":".$name.">".$n2;
 					break;
+				case "object":
+					if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
+						$xml .= $value->getXML();
+					}
 				default:
-					print(gettype($value));
 					break;
 			}
-
 			return $xml;
 		}
 
@@ -94,7 +97,7 @@
 				if(array_search($key, $this->excludeSerialization, $strict = TRUE) === false && $value !== null) {
 					switch (gettype($value)) {
 						case "string":
-						case "int":
+						case "integer":
 							$rtn[$key] = $value;
 							break;
 						case "array":
@@ -108,9 +111,9 @@
 							break;
 						case "object":
 							if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
-								print_r("Get Parent Class workds \n");
 								$rtn[$key] = $value->getSerialized();
 							}
+							break;
 						default:
 							break;
 					}
