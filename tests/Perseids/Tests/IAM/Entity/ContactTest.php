@@ -28,8 +28,9 @@
 
 			$partname = array();
 				$partname[0] = new PartName();
-				$partname[0]->setPartName("Louie");
-				$partname[0]->setPartNameLang("English");
+				$partname[0]->setPartName("Louie")
+							->setPartNameLang("English")
+							->setPartNameType("HONORIFIC_PREFIX");
 			$name->setPartName($partname);
 
 			$address = new Address();
@@ -54,9 +55,32 @@
 				->setTelephone(array($tel));
 		}
 		public function testXML() {
-			$expected = "<contacts:bambooContact>\n<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n<contacts:partName>\n<contacts:partName>Louie</contacts:partName>\n<contacts:partNameLang>English</contacts:partNameLang>\n</contacts:partName>\n</contacts:name>\n<contacts:displayName>JohnDoe123</contacts:displayName>\n<contacts:email>johndoe@aoldied.com</contacts:email>\n<contacts:iMs>\n<contacts:instantMessagingType>SKYPE</contacts:instantMessagingType>\n<contacts:account>johndoe</contacts:account>\n<contacts:locationType>WORK</contacts:locationType>\n</contacts:iMs>\n<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>\n</contacts:bambooContact>";
-			$xml = $this->contact->getXML();
-			$this->assertEquals($expected, $xml);
+			$expected = "
+<contacts:bambooContact xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:contacts=\"http://projectbamboo.org/bsp/services/core/contact\">
+	<contacts:name>
+		<contacts:familyName>Doe</contacts:familyName>
+		<contacts:givenName>John</contacts:givenName>
+		<contacts:partName>
+			<contacts:partName>Louie</contacts:partName>
+			<contacts:partNameType>HONORIFIC_PREFIX</contacts:partNameType>
+			<contacts:partNameLang>English</contacts:partNameLang>
+		</contacts:partName>
+	</contacts:name>
+	<contacts:displayName>JohnDoe123</contacts:displayName>
+	<contacts:email>johndoe@aoldied.com</contacts:email>
+	<contacts:iMs>
+		<contacts:instantMessagingType>SKYPE</contacts:instantMessagingType>
+		<contacts:account>johndoe</contacts:account>
+		<contacts:locationType>WORK</contacts:locationType>
+	</contacts:iMs>
+	<contacts:telephone>
+		<contacts:telephoneNumber>123</contacts:telephoneNumber>
+		<contacts:telephoneType>FAX</contacts:telephoneType>
+	</contacts:telephone>
+</contacts:bambooContact>
+";
+			$xml = $this->contact->getXML($attributes = true);
+			$this->assertXmlStringEqualsXmlString($expected, $xml);
 		}
 
 		public function testSerialize() {
@@ -67,7 +91,8 @@
 					"partName" => array(
 						0 => array(
 							"partName" => "Louie",
-							"partNameLang" => "English"
+							"partNameLang" => "English",
+							"partNameType" => "HONORIFIC_PREFIX"
 						)
 					)
 				),

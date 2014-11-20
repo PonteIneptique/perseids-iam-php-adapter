@@ -36,11 +36,11 @@
 		private $partNameTypeEnum = array("HONORIFIC_PREFIX", "NAME_GIVEN", "NAME_MIDDLE", "NAME_FAMILY_PATERNAL", "NAME_FAMILY_MATERNAL", "HONORIFIC_SUFFIX");
 	
 		/**
-		 * 
-		 *
+		 * Construction function
 		 */
 		public function __construct() {
 			$this->addExclusion("partNameTypeEnum");
+			$this->addRequired(array("partName", "partNameType"));
 		}
 
 		/**

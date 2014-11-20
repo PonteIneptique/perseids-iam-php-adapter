@@ -30,11 +30,11 @@
 
 			$partname[0] = new PartName();
 			$partname[0]->setPartName("Test");
-			$partname[0]->setPartNameLang("French");
+			$partname[0]->setPartNameType("HONORIFIC_PREFIX");
 
 			$partname[1] = new PartName();
 			$partname[1]->setPartName("Louie");
-			$partname[1]->setPartNameLang("English");
+			$partname[1]->setPartNameType("NAME_GIVEN");
 
 			$name->setPartName($partname);
 			$expected = array(
@@ -43,11 +43,11 @@
 				"partName" => array(
 					0 => array(
 						"partName" => "Test", 
-						"partNameLang" => "French"
+						"partNameType" => "HONORIFIC_PREFIX"
 					),
 					1 => array(
 						"partName" => "Louie", 
-						"partNameLang" => "English"
+						"partNameType" => "NAME_GIVEN"
 					)
 				)
 			);
@@ -62,14 +62,14 @@
 
 			$partname[0] = new PartName();
 			$partname[0]->setPartName("Test");
-			$partname[0]->setPartNameLang("French");
+			$partname[0]->setPartNameType("HONORIFIC_PREFIX");
 
 			$partname[1] = new PartName();
 			$partname[1]->setPartName("Louie");
-			$partname[1]->setPartNameLang("English");
+			$partname[1]->setPartNameType("NAME_GIVEN");
 
 			$name->setPartName($partname);
-			$expected = "<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n<contacts:partName>\n<contacts:partName>Test</contacts:partName>\n<contacts:partNameLang>French</contacts:partNameLang>\n</contacts:partName>\n<contacts:partName>\n<contacts:partName>Louie</contacts:partName>\n<contacts:partNameLang>English</contacts:partNameLang>\n</contacts:partName>\n</contacts:name>";
+			$expected = "<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n<contacts:partName>\n<contacts:partName>Test</contacts:partName>\n<contacts:partNameType>HONORIFIC_PREFIX</contacts:partNameType>\n</contacts:partName>\n<contacts:partName>\n<contacts:partName>Louie</contacts:partName>\n<contacts:partNameType>NAME_GIVEN</contacts:partNameType>\n</contacts:partName>\n</contacts:name>";
 			$this->assertEquals($expected, $name->getXML());
 		}
 	}
