@@ -18,7 +18,7 @@
 		 * The contact's Identifier
 		 * @var string
 		 */
-		protected $contactIdentifier;
+		protected $contactId;
 
 		/**
 		 * The contact's Name
@@ -65,7 +65,7 @@
 		protected $telephone;
 
 		function __construct() {
-			$this->addExclusion("contactIdentifier");
+			$this->addExclusion("contactId");
 		}
 	
 		/**
