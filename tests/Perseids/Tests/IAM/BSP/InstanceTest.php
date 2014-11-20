@@ -13,12 +13,11 @@
 		*/
 
 		protected function setUp() {
-			$this->IdP = new IdentityProvider("http://lascivaroma.com", "LascivaRoma");
+			$this->IdP = new IdentityProvider("http://lascivaroma.com", "LascivaRoma", "UserID");
 
 			$this->AppPerson = new Person();
 			$this->AppPerson
-				->setId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d")
-				->setIdentityProvider($this->IdP);
+				->setId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d");
 
 			$this->BSP = new Instance("https://services-rep.perseids.org/bsp");
 

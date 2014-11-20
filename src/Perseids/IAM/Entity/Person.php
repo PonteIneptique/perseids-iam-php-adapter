@@ -8,30 +8,66 @@
 	use Perseids\IAM\BSP\Instance;
 	use Perseids\IAM\Property\IdentityProvider;
 
-	/* extends EntityBase implements EntityInterface*/
-	class Person {
+	
+	class Person extends EntityBase implements EntityInterface {
+		/**
+		 * The namespace for this node
+		 * @var string 
+		 */
+		protected $namespace = "person";
 
-		protected $XML;
-		protected $IdP;
+		/**
+		 * The URL path endpoint for this object
+		 * @var string 
+		 */
+		protected $path = "person";
+
+		/**
+		 * The main node name
+		 * @var string
+		 */
+		protected $node = "bambooPerson";
+
+		/**
+		 * The main node attributes
+		 * @var string
+		 */
+		protected $nodeAttributes = 'xmlns:person="http://projectbamboo.org/bsp/BambooPerson" xmlns:xs="http://www.w3.org/2001/XMLSchema"';
+
+		/**
+		 * List of sourceId identifiers 
+		 * @var array
+		 */
+		protected $sourceId;
+
+		/**
+		 * The user ID for our own system
+		 * @var string
+		 */
 		protected $id;
-		protected $BSPUuid;
+
+		/**
+		 * The user personal UUID on the BSP
+		 * @var string
+		 */
+		protected $personIdentifier;
 
 		/**
 		 * Generate the object
-		 * 
-		 * @return \Perseids\IAM\BSP\Person The actual instance
 		 */
 		function __construct() {
-			$this->XML = new Schema();
-			return $this;
+			parent::__construct();
+			$this
+				->addExclusion("id")
+				->addExclusion("personIdentifier");
 		}
 
 		/**
 		 * Set the Identity Provider information
-		 * @param IdentityProvider $IdP An identity provider object
+		 * @param array $IdP An array with IdentityProvider
 		 * @return self
 		 */
-		function setIdentityProvider(IdentityProvider $IdP) {
+		function setIdentityProvider($IdP) {
 			$this->IdP = $IdP;
 			return $this;
 		}
@@ -45,7 +81,7 @@
 		}
 
 		/**
-		 * [setId description]
+		 * Set the The ID of our person
 		 * @param string $id [description]
 		 * @return self
 		 */
@@ -55,54 +91,38 @@
 		} 
 
 		/**
-		 * [getId description]
-		 * @return string The ID of our person
+		 * Get the The ID of our person
+		 * @return string 
 		 */
 		public function getId() {
 			return $this->id;
 		}
 
 		/**
-		 * [setBSPUuid description]
-		 * @param string $BSPUuid [description]
+		 * Se
+		 * @param string $UUID [description]
 		 * @return self
 		 */
-		public function setBSPUuid($BSPUuid) {
-			$this->BSPUuid = $BSPUuid;
+		public function setUUID($UUID) {
+			$this->personIdentifier = $BSPUuid;
 			return $this;
 		} 
 
 		/**
-		 * [getBSPUuid description]
-		 * @return string The BSP UUID of our person
+		 * Get the BSP UUID of our person
+		 * @return string 
 		 */
-		public function getBSPUuid() {
-			return $this->BSPUuid;
+		public function getUUID() {
+			return $this->personIdentifier;
 		}
 
 		/**
-		 * Turns a url to a readable uuid
-		 * @param string $url A url given by the BSP
-		 * @param string $path The path used to post data
-		 * 
-		 * @return string $uuid A UUID
+		 * Add an Identity Provider object for identifying our User
+		 * @param $idP IdentityProvider The object to be added
+		 * @return self
 		 */
-		private function URLtoUUID($url, $path) {
-			$regexp = "/" . str_replace("/", "\\/", $path) . "\/urn\:uuid\:(?P<uuid>.*)/";
-			preg_match($regexp, $url, $matches);
-			$uuid = $matches["uuid"];
-
-			return $uuid;
-		}
-
-		function create(Instance $BSP) {
-			$xml = $this->XML->PersonsCreate($this->getIdentityProvider(), $this);
-			$response = $BSP->post("/persons", "text/xml; charset=UTF-8", $xml);
-			if($response->getStatusCode() === 201) {
-				$uuid = $this->URLtoUUID($response->getHeader("location"), "/persons");
-				$this->setBSPUuid($uuid);
-			}
-			return false;
+		public function addSourceId($idP) {
+			return $this->addObjectToList("sourceId", $idP, "Perseids\IAM\Property\IdentityProvider");
 		}
 	}
 ?>

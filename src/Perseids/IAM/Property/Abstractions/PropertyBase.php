@@ -150,7 +150,7 @@
 
 		/**
 		 * Exclude an element from serialization
-		 * @param string A key
+		 * @param string $string A key
 		 * @return this
 		 */
 		public function addExclusion($string) {
@@ -159,8 +159,19 @@
 		}
 
 		/**
+		 * Add an object and check it's validity to a list
 		 * Helper function for setter with array with specific object
-		 *
+		 * @param string $varname The property of the class to be modified
+		 * @param object $value The object to add in the list
+		 * @param string $expectedType The name of the class expected
+		 * @return self
 		 */
-		//private function setList(array $list, )
+		protected function addObjectToList($varname, $value, $expectedType) {
+			if(get_class($value) === $expectedType) {
+				$this->{$varname}[] = $value;
+			} else {
+				throw(new \InvalidArgumentException($expectedType." expected. ".get_class($value) . " given."));
+			}
+			return $this;
+		}
 	}
