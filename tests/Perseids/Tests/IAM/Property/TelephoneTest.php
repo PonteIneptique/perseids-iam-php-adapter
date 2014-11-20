@@ -29,6 +29,15 @@
 				->setTelephoneNumber("123");
 			$tel->getSerialized();
 			$expected = "<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>";
+		}
 
+		public function testRequiredWorksWithXML() {
+
+        	$this->setExpectedException('Perseids\IAM\Exceptions\RequiredFieldException');
+			$tel = new Telephone();
+			$tel
+				->setTelephoneNumber("123");
+			$tel->getXML();
+			$expected = "<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>";
 		}
 	}
