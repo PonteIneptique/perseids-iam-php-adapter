@@ -37,6 +37,7 @@
 		public function __construct() {
 			$this->addExclusion("defaultTelephoneType");
 			$this->addExclusion("telephoneTypeEnum");
+			$this->addRequired(array("telephoneType", "telephoneNumber"));
 		}
 
 

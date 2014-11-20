@@ -1,6 +1,8 @@
 <?php
 	namespace Perseids\IAM\Property\Abstractions;
 
+	use Perseids\IAM\Exceptions\RequiredFieldException;
+
 	class PropertyBase {
 		/**
 		 * The Namespace used for the xml
@@ -21,10 +23,16 @@
 		protected $nodeAttributes = '';
 
 		/**
+		 * A list of property that are required for serialization and thus xml
+		 * @var array
+		 */
+		protected $required = array();
+
+		/**
 		 * Serialization excluded vars
 		 * @var array
 		 */
-		protected $excludeSerialization = ["namespace", "node", "excludeSerialization", "nodeAttributes"];
+		protected $excludeSerialization = ["namespace", "node", "excludeSerialization", "nodeAttributes", "required"];
 
 		/**
 		 * Returns XML for content
@@ -108,30 +116,32 @@
 		private function serialize($serialized, $deepSerialization = true) {
 			$rtn = [];
 			while(list($key, $value) = each($serialized)) {
-				if(array_search($key, $this->excludeSerialization, $strict = true) === false && $value !== null) {
-					switch (gettype($value)) {
-						case "string":
-						case "integer":
-							$rtn[$key] = $value;
-							break;
-						case "array":
-							if(count($value) > 0) {
-								if($deepSerialization) {
-									$rtn[$key] = $this->serialize($value);
+				if(array_search($key, $this->excludeSerialization, $strict = true) === false) {
+					if($this->checkRequired($key, $value) === true && $value !== null) {
+						switch (gettype($value)) {
+							case "string":
+							case "integer":
+								$rtn[$key] = $value;
+								break;
+							case "array":
+								if(count($value) > 0) {
+									if($deepSerialization) {
+										$rtn[$key] = $this->serialize($value);
+									} else {
+										$rtn[$key] = $value;
+									}
+								}
+								break;
+							case "object":
+								if(method_exists($value, "getSerialized") === true && $deepSerialization === true) {
+									$rtn[$key] = $value->getSerialized();
 								} else {
 									$rtn[$key] = $value;
 								}
-							}
-							break;
-						case "object":
-							if(method_exists($value, "getSerialized") === true && $deepSerialization === true) {
-								$rtn[$key] = $value->getSerialized();
-							} else {
-								$rtn[$key] = $value;
-							}
-							break;
-						default:
-							break;
+								break;
+							default:
+								break;
+						}
 					}
 				}
 			}
@@ -197,5 +207,41 @@
 					break;
 			}
 			return $this;
+		}
+
+		/**
+		 * Add an element to required elements for a given object
+		 * @param string $key A property name to be required
+		 * @param any $value The value for this property in self
+		 * @return boolean
+		 */
+		protected function checkRequired($key, $value) {
+			if(array_search($key, $this->required, $strict = True) !== False) {
+				switch (gettype($value)) {
+					case 'array':
+						if(count($value) > 0) {
+							return true;
+						}
+						throw new RequiredFieldException($key, $this);
+						return false;
+						break;
+					case 'null':
+					case 'NULL':
+						throw new RequiredFieldException($key, $this);
+							return false;
+						break;
+					case 'string':
+						if(trim($value) === '') {
+							throw new RequiredFieldException($key, $this);
+							return false;
+						}
+						return true;
+						break;
+					default:
+						return true;
+						break;
+				}
+			}
+			return true;
 		}
 	}
