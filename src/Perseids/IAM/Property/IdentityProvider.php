@@ -1,5 +1,5 @@
 <?php
-	namespace Perseids\IAM\IdP;
+	namespace Perseids\IAM\Property;
 
 	class IdentityProvider {
 

@@ -1,9 +1,9 @@
 <?php
-	namespace Perseids\IAM\BSP\BambooClass;
+	namespace Perseids\IAM\Property;
 
-	use Perseids\IAM\BSP\BambooClass\Models\Mockup;
+	use Perseids\IAM\Property\Abstractions\PropertyBase;
 
-	class Name extends Mockup {
+	class Name extends PropertyBase {
 		/**
 		 * Mother node
 		 * @var string
@@ -47,7 +47,7 @@
 
 		/**
 		 * List of PartName object
-		 * @var array(\Perseids\IAM\BSP\BambooClass\PartName);
+		 * @var array(\Perseids\IAM\Entity\PartName);
 		 */
 		protected $partName = array();
 
@@ -200,7 +200,7 @@
 	/**
 	 * Gets the List of PartName object.
 	 *
-	 * @return array(\Perseids\IAM\BSP\BambooClass\PartName);
+	 * @return array(\Perseids\IAM\Entity\PartName);
 	 */
 	public function getPartName()
 	{
@@ -210,7 +210,7 @@
 	/**
 	 * Sets the List of PartName object.
 	 *
-	 * @param array(\Perseids\IAM\BSP\BambooClass\PartName); $partName the part name
+	 * @param array(\Perseids\IAM\Entity\PartName); $partName the part name
 	 *
 	 * @return self
 	 */

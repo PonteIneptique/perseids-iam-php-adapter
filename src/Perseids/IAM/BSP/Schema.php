@@ -1,8 +1,8 @@
 <?php
 	namespace Perseids\IAM\BSP;
 
-	use Perseids\IAM\IdP\IdentityProvider;
-	use Perseids\IAM\BSP\Person;
+	use Perseids\IAM\Property\IdentityProvider;
+	use Perseids\IAM\Entity\Person;
 	
 	class Schema {
 

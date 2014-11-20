@@ -1,7 +1,7 @@
 <?php
-	namespace Perseids\Tests\IAM\BSP\BambooClass;
+	namespace Perseids\Tests\IAM\Property;
 
-	use Perseids\IAM\BSP\BambooClass\Address;
+	use Perseids\IAM\Property\Address;
 
 	class AddressTest extends \PHPUnit_Framework_TestCase {
 		public function testXML() {

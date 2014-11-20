@@ -1,6 +1,6 @@
 <?php
 
-	namespace Perseids\IAM\BSP\BambooClass\Exceptions;
+	namespace Perseids\IAM\Exceptions;
 
 	class RequiredFieldException extends \Exception {
 		public $requiredField;

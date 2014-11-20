@@ -1,7 +1,7 @@
 <?php
-	namespace Perseids\IAM\BSP\BambooClass\Models;
+	namespace Perseids\IAM\Property\Abstractions;
 
-	class Mockup {
+	class PropertyBase {
 		/**
 		 * The Namespace used for the xml
 		 * @var string
@@ -80,7 +80,7 @@
 					}
 					break;
 				case "object":
-					if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Models\Mockup") {
+					if(get_parent_class($value) === "Perseids\IAM\Property\Abstractions\PropertyBase") {
 						if(method_exists($value, "getUUID") === true && $value->getUUID() !== null) {
 							$xml[] = "<".$namespace.":".$name.">".$value->getUUID()."</".$namespace.":".$name.">";
 						} else {
@@ -158,4 +158,9 @@
 			return $this;
 		}
 
+		/**
+		 * Helper function for setter with array with specific object
+		 *
+		 */
+		//private function setList(array $list, )
 	}

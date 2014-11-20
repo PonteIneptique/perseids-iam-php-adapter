@@ -1,10 +1,14 @@
 <?php
-	namespace Perseids\IAM\BSP;
+	namespace Perseids\IAM\Entity;
 	
+	use Perseids\IAM\Entity\Abstractions\EntityBase;
+	use Perseids\IAM\Entity\Abstractions\EntityInterface;
+
 	use Perseids\IAM\BSP\Schema;
 	use Perseids\IAM\BSP\Instance;
-	use Perseids\IAM\IdP\IdentityProvider;
+	use Perseids\IAM\Property\IdentityProvider;
 
+	/* extends EntityBase implements EntityInterface*/
 	class Person {
 
 		protected $XML;
@@ -25,7 +29,7 @@
 		/**
 		 * Set the Identity Provider information
 		 * @param IdentityProvider $IdP An identity provider object
-		 * @return \Perseids\IAM\BSP\Person The actual instance
+		 * @return self
 		 */
 		function setIdentityProvider(IdentityProvider $IdP) {
 			$this->IdP = $IdP;
@@ -43,6 +47,7 @@
 		/**
 		 * [setId description]
 		 * @param string $id [description]
+		 * @return self
 		 */
 		public function setId($id) {
 			$this->id = $id;
@@ -60,6 +65,7 @@
 		/**
 		 * [setBSPUuid description]
 		 * @param string $BSPUuid [description]
+		 * @return self
 		 */
 		public function setBSPUuid($BSPUuid) {
 			$this->BSPUuid = $BSPUuid;

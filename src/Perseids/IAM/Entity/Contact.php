@@ -1,16 +1,16 @@
 <?php
 
-	namespace Perseids\IAM\BSP;
+	namespace Perseids\IAM\Entity;
 
-	use Perseids\IAM\BSP\BambooClass\Models\BambooObjectInterface;
-	use Perseids\IAM\BSP\BambooClass\Models\BambooObjectMockup;
+	use Perseids\IAM\Entity\Abstractions\EntityBase;
+	use Perseids\IAM\Entity\Abstractions\EntityInterface;
 
-	use Perseids\IAM\BSP\BambooClass\Name;
-	use Perseids\IAM\BSP\BambooClass\IM;
-	use Perseids\IAM\BSP\BambooClass\Address;
-	use Perseids\IAM\BSP\BambooClass\Telephone;
+	use Perseids\IAM\Property\Name;
+	use Perseids\IAM\Property\IM;
+	use Perseids\IAM\Property\Address;
+	use Perseids\IAM\Property\Telephone;
 
-	class Contact extends BambooObjectMockup implements BambooObjectInterface {
+	class Contact extends EntityBase implements EntityInterface {
 		/**
 		 * The URL path endpoint for this object
 		 * @var string 

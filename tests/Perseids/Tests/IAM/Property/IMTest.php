@@ -1,7 +1,7 @@
 <?php
-	namespace Perseids\Tests\IAM\BSP\BambooClass;
+	namespace Perseids\Tests\IAM\Property;
 
-	use Perseids\IAM\BSP\BambooClass\IM;
+	use Perseids\IAM\Property\IM;
 
 	class IMTest extends \PHPUnit_Framework_TestCase {
 		

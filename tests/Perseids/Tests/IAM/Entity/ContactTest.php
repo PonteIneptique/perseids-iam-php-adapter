@@ -1,21 +1,27 @@
 <?php
 
-	namespace Perseids\IAM\BSP;
+	namespace Perseids\Tests\IAM\Entity;
 
-	use Perseids\IAM\BSP\Contact;
-	use Perseids\IAM\BSP\BambooClass\Name;
-	use Perseids\IAM\BSP\BambooClass\PartName;
-	use Perseids\IAM\BSP\BambooClass\IM;
-	use Perseids\IAM\BSP\BambooClass\Address;
-	use Perseids\IAM\BSP\BambooClass\Telephone;
+	use Perseids\IAM\Entity\Contact;
+	use Perseids\IAM\Entity\Person;
+
+
+	use Perseids\IAM\BSP\Instance;
+
+
+	use Perseids\IAM\Property\Name;
+	use Perseids\IAM\Property\PartName;
+	use Perseids\IAM\Property\IM;
+	use Perseids\IAM\Property\Address;
+	use Perseids\IAM\Property\Telephone;
 
 	class ContactTest extends \PHPUnit_Framework_TestCase {
 		protected function setUp() {
 
 			$this->AppPerson = new Person();
 			$this->AppPerson
-				->setId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d");
-				
+				->setId("urn:uuid:b86d2c75-940c-4575-9475-8c31dc25609e");
+
 			$name = new Name();
 			$name->setFamilyName("Doe")
 				 ->setGivenName("John");
@@ -96,7 +102,7 @@
 				->setVerify(false)
 				->setCertificate(__DIR__ . "/../../../../../certificate/file.pem");
 
-			$this->contact->create($this->BSP);
-			print_r($this->contact->getUUID());
+			//$this->contact->create($this->BSP);
+			//print_r($this->contact->getUUID());
 		}
 	}

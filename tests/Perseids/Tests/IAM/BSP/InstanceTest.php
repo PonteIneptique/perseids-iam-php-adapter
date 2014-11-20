@@ -2,8 +2,8 @@
 	namespace Perseids\Tests\IAM\BSP;
 
 	use Perseids\IAM\BSP\Instance;
-	use Perseids\IAM\BSP\Person;
-	use Perseids\IAM\IdP\IdentityProvider;
+	use Perseids\IAM\Entity\Person;
+	use Perseids\IAM\Property\IdentityProvider;
 
 	class InstanceTest extends \PHPUnit_Framework_TestCase {
 		/*
@@ -46,7 +46,10 @@
 			$testPerson = new Person();
 			$testPerson->setId($randomHash);
 			$testPerson->setIdentityProvider($this->IdP);
-			//$testPerson->create($this->BSP);
+			/*
+			$testPerson->create($this->BSP);
+			print_r($testPerson->getBSPUuid());
+			*/
 
 		}
 	}

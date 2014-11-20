@@ -1,10 +1,10 @@
 <?php
-	namespace Perseids\IAM\BSP\BambooClass\Models;
+	namespace Perseids\IAM\Entity\Abstractions;
 
-	use Perseids\IAM\BSP\BambooClass\Models\Mockup;
-	use \Perseids\IAM\BSP\Instance;
+	use Perseids\IAM\Property\Abstractions\PropertyBase;
+	use Perseids\IAM\BSP\Instance;
 
-	class BambooObjectMockup extends Mockup {
+	class EntityBase extends PropertyBase {
 		/**
 		 * The URL path endpoint for this object
 		 * @var string 
@@ -18,8 +18,7 @@
 		/**
 		 * Turns a url to a readable uuid
 		 * @param string $url A url given by the BSP
-		 * 
-		 * @return string $uuid A UUID
+		 * @return string
 		 */
 		private function URLtoUUID($url) {
 			$regexp = "/" . str_replace("/", "\\/", $this->path) . "\/urn\:uuid\:(?P<uuid>.*)/";
@@ -40,10 +39,10 @@
 				throw $e;
 				return false; 
 			}
-			$xml = $this->getXML();
+			$xml = $this->getXML($attributes = true);
 			$response = $BSP->post("/contacts", "text/xml; charset=UTF-8", $xml);
 			if($response->getStatusCode() === 201) {
-				$uuid = $this->URLtoUUID($response->getHeader("location"), $this->path);
+				$uuid = $this->URLtoUUID($response->getHeader("location"));
 				$this->setUUID($uuid);
 				return $self;
 			}

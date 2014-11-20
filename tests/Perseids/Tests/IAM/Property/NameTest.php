@@ -1,8 +1,8 @@
 <?php
-	namespace Perseids\Tests\IAM\BSP\BambooClass;
+	namespace Perseids\Tests\IAM\Property;
 
-	use Perseids\IAM\BSP\BambooClass\Name;
-	use Perseids\IAM\BSP\BambooClass\PartName;
+	use Perseids\IAM\Property\Name;
+	use Perseids\IAM\Property\PartName;
 
 	class NameTest extends \PHPUnit_Framework_TestCase {
 		

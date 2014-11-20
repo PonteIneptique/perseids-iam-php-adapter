@@ -1,11 +1,11 @@
 <?php
-	namespace Perseids\IAM\BSP\BambooClass\Models;
+	namespace Perseids\IAM\Entity\Abstractions;
 
 	use \Perseids\IAM\BSP\Instance;
 	/*
 		Bamboo object represents items that can be posted. They need to implement the function setUUID, getUUID
 	*/
-	interface BambooObjectInterface {
+	interface EntityInterface {
 		/**
 		 * Set the UUID of the object
 		 * @param $UUID string The UUID

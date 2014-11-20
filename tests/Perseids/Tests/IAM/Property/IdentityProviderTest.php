@@ -1,7 +1,7 @@
 <?php
-	namespace Perseids\Tests\IAM\IdP;
+	namespace Perseids\Tests\IAM\Property;
 
-	use Perseids\IAM\IdP\IdentityProvider;
+	use Perseids\IAM\Property\IdentityProvider;
 
 	class IdentityProviderTest extends \PHPUnit_Framework_TestCase {
 		public function testOverrideOptions() {

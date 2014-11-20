@@ -1,8 +1,8 @@
 <?php
 	namespace Perseids\Tests\IAM\BSP;
 
-	use Perseids\IAM\BSP\Person;
-	use Perseids\IAM\IdP\IdentityProvider;
+	use Perseids\IAM\Entity\Person;
+	use Perseids\IAM\Property\IdentityProvider;
 	use Perseids\IAM\BSP\Schema;
 
 	class SchemaTest extends \PHPUnit_Framework_TestCase {

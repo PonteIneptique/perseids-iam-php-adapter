@@ -3,6 +3,8 @@
 	
 	use GuzzleHttp\Stream\Stream;
 
+	use Perseids\IAM\Entity\Person;
+
 	class Instance {
 		/**
 		 * The url for the BSP
@@ -48,7 +50,7 @@
 
 		/**
 		 * Bamboo Person representing the Application
-		 * @var \Perseids\IAM\BSP\Person
+		 * @var \Perseids\IAM\Entity\Person
 		 */
 		protected $BambooBPiD;
 
@@ -63,7 +65,7 @@
 		 * @param string $url The URL for the BSP Instance
 		 * @param string $certificates The path to the certificate for the ssl relationship
 		 * 
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		function __construct($url = null) {
 			$this->client = new \GuzzleHttp\Client();
@@ -99,7 +101,7 @@
 		 * Set the URL of the Instance
 		 *
 		 * @param string $url The URL for the BSP Instance
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		function setUrl($url) {
 			$this->url = $url;
@@ -119,7 +121,7 @@
 		 * Set the Verify of the Instance
 		 *
 		 * @param string $verify The Verify option of the Guzzle client for SSL connections
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		function setVerify($verify = true) {
 			$this->verify = $verify;
@@ -139,7 +141,7 @@
 		 * Set the Private SSL key in PEM format of the Instance
 		 *
 		 * @param string,boolean,array $sslKeys Private SSL key in PEM format. String for a path, array(path, password) or false if not required
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		function setSSL_Key($sslKey = false) {
 			$this->sslKey = $sslKey;
@@ -159,7 +161,7 @@
 		 * Set the Certificate Path of the Instance
 		 *
 		 * @param string,boolean,array $certificates The path to the certificate for the ssl relationship
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		function setCertificate($certificate = false) {
 			$this->certificate = $certificate;
@@ -179,7 +181,7 @@
 		 * Set the Bamboo Person agent for the headers
 		 * 
 		 * @param Person $BambooPerson The identity on behalf of which we do request
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		public function setBambooPerson(Person $BambooPerson){
 			$this->BambooBPiD = $BambooPerson;
@@ -199,7 +201,7 @@
 		 * Set the ID of the App doing request to the BSP
 		 * 
 		 * @param string $appId  The ID of the App doing request to the BSP
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		public function setBambooAppId($appId) {
 			$this->BambooAppId = $appId;
@@ -219,7 +221,7 @@
 		 * Set the Bamboo Roles
 		 * 
 		 * @param string $roles The roles for the headers
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		public function setBambooRoles(string $roles) {
 			$this->BambooRoles = $roles;
@@ -237,7 +239,7 @@
 		/**
 		 * [setStreamContext description]
 		 * @param [type] $context [description]
-		 * @return \Perseids\IAM\BSP\Instance
+		 * @return self
 		 */
 		public function setStreamContext($context) {
 			$this->streamContext = $context;

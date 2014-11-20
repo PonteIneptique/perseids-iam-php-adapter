@@ -1,9 +1,9 @@
 <?php
-	namespace Perseids\IAM\BSP\BambooClass;
+	namespace Perseids\IAM\Property;
 
-	use Perseids\IAM\BSP\BambooClass\Models\Mockup;
+	use Perseids\IAM\Property\Abstractions\PropertyBase;
 
-	class IM extends Mockup {
+	class IM extends PropertyBase {
 		/**
 		 * The name of the mother node
 		 * @var string
