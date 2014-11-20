@@ -15,22 +15,29 @@
 		protected $node = "mockup";
 
 		/**
+		 * The main node attributes
+		 * @var string
+		 */
+		protected $nodeAttributes = '';
+
+		/**
 		 * Serialization excluded vars
 		 * @var array
 		 */
-		protected $excludeSerialization = ["namespace", "node", "excludeSerialization"];
+		protected $excludeSerialization = ["namespace", "node", "excludeSerialization", "nodeAttributes"];
 
 		/**
 		 * Returns XML for content
+		 * @param  boolean $attributes If set to true, will put the node's attributes in its declaration 
 		 * @return string The XML representation of the element
 		 */
-		public function getXML() {
+		public function getXML($attributes = False) {
 			$object = $this->getSerialized($deepSerialization = false);
 			$xml = array();
 			while(list($key, $value) = each($object)) {
 				$xml[] = $this->createNode($this->namespace, $key, $value, false);
 			}
-			$xml = $this->createNode($this->namespace, $this->node, implode("\n", $xml), true);
+			$xml = $this->createNode($this->namespace, $this->node, implode("\n", $xml), true, $attributes = $attributes);
 
 			return $xml;
 		}
@@ -41,9 +48,10 @@
 		 * @param  string $name      The name of the node
 		 * @param  string $value     The value of the node
 		 * @param  boolean $lb        If adding \n to to encapsulate the value
+		 * @param  boolean $attributes If set to true, will put the node's attributes in its declaration 
 		 * @return string            An XML node
 		 */
-		private function createNode($namespace, $name, $value, $lb = false) {
+		private function createNode($namespace, $name, $value, $lb = false, $attributes = False) {
 			$xml = array();
 			switch (gettype($value)) {
 				case "array":
@@ -62,10 +70,13 @@
 					break;
 				case "string":
 				case "integer":
+					$node = $namespace.":".$name;
+					if($attributes === true) { $attributes = " ".$this->nodeAttributes; }
+					else { $attributes = ""; }
 					if($lb === true) {
-						$xml[] = "<".$namespace.":".$name.">\n".$value."\n</".$namespace.":".$name.">";
+						$xml[] = "<".$node.$attributes.">\n".$value."\n</".$node.">";
 					} else {
-						$xml[] = "<".$namespace.":".$name.">".$value."</".$namespace.":".$name.">";
+						$xml[] = "<".$node.$attributes.">".$value."</".$node.">";
 					}
 					break;
 				case "object":

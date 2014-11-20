@@ -10,10 +10,17 @@
 
 	class Contact extends Mockup {
 		/**
-		 * The mother node name
+		 * The main node name
 		 * @var string
 		 */
 		protected $node = "bambooContact";
+
+		/**
+		 * The main node attributes
+		 * @var string
+		 */
+		protected $nodeAttributes = 'xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:contacts="http://projectbamboo.org/bsp/services/core/contact"';
+
 		/**
 		 * The contact's Identifier
 		 * @var string
@@ -67,7 +74,7 @@
 		function __construct() {
 			$this->addExclusion("contactId");
 		}
-	
+
 		/**
 		 * Gets the The contact's Identifier.
 		 *
