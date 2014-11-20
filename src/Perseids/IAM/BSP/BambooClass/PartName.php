@@ -116,4 +116,13 @@
 
 		    return $this;
 		}
+
+		/**
+		 * Get the list of available partNameType
+		 * @return array
+		 */
+		public function getPartNameTypeEnum() {
+			return $this->partNameTypeEnum;
+		}
+
 }

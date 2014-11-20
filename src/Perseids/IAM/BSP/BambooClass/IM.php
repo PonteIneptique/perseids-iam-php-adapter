@@ -149,4 +149,20 @@
 
 		    return $this;
 		}
+
+		/**
+		 * Get the list of available location type
+		 * @return array
+		 */
+		public function getLocationTypeEnum() {
+			return $this->locationTypeEnum;
+		}
+
+		/**
+		 * Get the list of available instant messaging type
+		 * @return array
+		 */
+		public function getInstantMessagingTypeEnum() {
+			return $this->instantMessagingTypeEnum;
+		}
 }

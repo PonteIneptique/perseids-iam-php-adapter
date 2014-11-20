@@ -198,4 +198,12 @@
 			}
 			return $this;
 		}
+
+		/**
+		 * Get the list of available address type
+		 * @return array
+		 */
+		public function getAddressTypeEnum() {
+			return $this->addressTypeEnum;
+		}
 	}
