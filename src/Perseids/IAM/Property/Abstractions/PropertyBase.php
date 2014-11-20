@@ -150,11 +150,18 @@
 
 		/**
 		 * Exclude an element from serialization
-		 * @param string $string A key
+		 * @param string,array $key A key
 		 * @return this
 		 */
-		public function addExclusion($string) {
-			$this->excludeSerialization[] = $string;
+		public function addExclusion($key) {
+			switch (gettype($key)) {
+				case "string":
+					$this->excludeSerialization[] = $key;
+					break;
+				case "array":
+					$this->excludeSerialization = array_merge($this->excludeSerialization, $key);
+					break;
+			}
 			return $this;
 		}
 
@@ -171,6 +178,23 @@
 				$this->{$varname}[] = $value;
 			} else {
 				throw(new \InvalidArgumentException($expectedType." expected. ".get_class($value) . " given."));
+			}
+			return $this;
+		}
+
+		/**
+		 * Add an element to required elements for a given object
+		 * @param string,array $key A property name to be required
+		 * @return self
+		 */
+		protected function addRequired($key) {
+			switch (gettype($key)) {
+				case "string":
+					$this->required[] = $key;
+					break;
+				case "array":
+					$this->required = array_merge($this->required, $key);
+					break;
 			}
 			return $this;
 		}
