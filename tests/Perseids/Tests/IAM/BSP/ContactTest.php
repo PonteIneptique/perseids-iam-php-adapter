@@ -12,6 +12,10 @@
 	class ContactTest extends \PHPUnit_Framework_TestCase {
 		protected function setUp() {
 
+			$this->AppPerson = new Person();
+			$this->AppPerson
+				->setId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d");
+				
 			$name = new Name();
 			$name->setFamilyName("Doe")
 				 ->setGivenName("John");
@@ -81,5 +85,18 @@
 				);
 			$array = $this->contact->getSerialized();
 			$this->assertEquals($expected, $array);
+		}
+
+		public function testCreate() {
+			$this->BSP = new Instance("https://services-rep.perseids.org/bsp");
+
+			$this->BSP
+				->setBambooPerson($this->AppPerson)
+				->setBambooAppId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d")
+				->setVerify(false)
+				->setCertificate(__DIR__ . "/../../../../../certificate/file.pem");
+
+			$this->contact->create($this->BSP);
+			print_r($this->contact->getUUID());
 		}
 	}
