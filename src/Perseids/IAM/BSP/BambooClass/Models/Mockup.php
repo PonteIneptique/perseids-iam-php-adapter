@@ -1,5 +1,5 @@
 <?php
-	namespace Perseids\IAM\BSP\BambooClass;
+	namespace Perseids\IAM\BSP\BambooClass\Models;
 
 	class Mockup {
 		/**
@@ -80,7 +80,7 @@
 					}
 					break;
 				case "object":
-					if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup") {
+					if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Models\Mockup") {
 						if(method_exists($value, "getUUID") === true && $value->getUUID() !== null) {
 							$xml[] = "<".$namespace.":".$name.">".$value->getUUID()."</".$namespace.":".$name.">";
 						} else {
@@ -124,7 +124,7 @@
 							}
 							break;
 						case "object":
-							if(get_parent_class($value) === "Perseids\IAM\BSP\BambooClass\Mockup" && $deepSerialization === true) {
+							if(method_exists($value, "getSerialized") === true && $deepSerialization === true) {
 								$rtn[$key] = $value->getSerialized();
 							} else {
 								$rtn[$key] = $value;
@@ -157,4 +157,5 @@
 			$this->excludeSerialization[] = $string;
 			return $this;
 		}
+
 	}

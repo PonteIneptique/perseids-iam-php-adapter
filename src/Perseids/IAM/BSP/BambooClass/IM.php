@@ -1,7 +1,7 @@
 <?php
 	namespace Perseids\IAM\BSP\BambooClass;
 
-	use Perseids\IAM\BSP\BambooClass\Mockup;
+	use Perseids\IAM\BSP\BambooClass\Models\Mockup;
 
 	class IM extends Mockup {
 		/**

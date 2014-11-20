@@ -1,7 +1,7 @@
 <?php
 	namespace Perseids\Tests\IAM\BSP\BambooClass;
 
-	use Perseids\IAM\BSP\BambooClass\RequiredFieldException;
+	use Perseids\IAM\BSP\BambooClass\Exceptions\RequiredFieldException;
 	use Perseids\IAM\BSP\BambooClass\PartName;
 
 	class RequiredFieldExceptionTest extends \PHPUnit_Framework_TestCase {

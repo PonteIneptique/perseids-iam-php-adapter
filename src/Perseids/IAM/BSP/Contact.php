@@ -2,13 +2,15 @@
 
 	namespace Perseids\IAM\BSP;
 
-	use Perseids\IAM\BSP\BambooClass\Mockup;
+	use Perseids\IAM\BSP\BambooClass\Models\BambooObjectInterface;
+	use Perseids\IAM\BSP\BambooClass\Models\BambooObjectMockup;
+
 	use Perseids\IAM\BSP\BambooClass\Name;
 	use Perseids\IAM\BSP\BambooClass\IM;
 	use Perseids\IAM\BSP\BambooClass\Address;
 	use Perseids\IAM\BSP\BambooClass\Telephone;
 
-	class Contact extends Mockup {
+	class Contact extends BambooObjectMockup implements BambooObjectInterface {
 		/**
 		 * The main node name
 		 * @var string
@@ -259,7 +261,6 @@
 
 		/**
 		 * Sets the The contact's telephone.
-		 *
 		 * @param array $telephone the telephone
 		 *
 		 * @return self
@@ -269,5 +270,22 @@
 		    $this->telephone = $telephone;
 
 		    return $this;
+		}
+
+		/**
+		 * Set the UUID of the object
+		 * @param $UUID string The UUID
+		 * @return self
+		 */
+		public function setUUID($UUID) {
+			$this->contactId = $UUID;
+			return $this;
+		}
+		/**
+		 * Get the UUID of the object
+		 * @return string
+		 */
+		public function getUUID() {
+			return $this->contactId;
 		}
 }
