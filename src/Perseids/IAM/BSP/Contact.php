@@ -12,6 +12,12 @@
 
 	class Contact extends BambooObjectMockup implements BambooObjectInterface {
 		/**
+		 * The URL path endpoint for this object
+		 * @var string 
+		 */
+		protected $path = "contacts";
+
+		/**
 		 * The main node name
 		 * @var string
 		 */
@@ -74,6 +80,7 @@
 		protected $telephone;
 
 		function __construct() {
+			parent::__construct();
 			$this->addExclusion("contactId");
 		}
 

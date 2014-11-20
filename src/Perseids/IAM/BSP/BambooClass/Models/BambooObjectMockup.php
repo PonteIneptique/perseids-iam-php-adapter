@@ -11,8 +11,7 @@
 		 */
 		protected $path;
 
-		function __construct() {
-			parent::__construct();
+		public function __construct() {
 			$this->addExclusion("path");
 		}
 
