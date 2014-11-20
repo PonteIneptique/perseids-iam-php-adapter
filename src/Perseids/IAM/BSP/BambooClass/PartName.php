@@ -30,6 +30,20 @@
 		protected $partNameLang;
 
 		/**
+		 * Part Name type enumeration
+		 * @var array
+		 */
+		private $partNameTypeEnum = array("HONORIFIC_PREFIX", "NAME_GIVEN", "NAME_MIDDLE", "NAME_FAMILY_PATERNAL", "NAME_FAMILY_MATERNAL", "HONORIFIC_SUFFIX");
+	
+		/**
+		 * 
+		 *
+		 */
+		public function __construct() {
+			$this->addExclusion("partNameTypeEnum");
+		}
+
+		/**
 		 * Gets the Part of the name.
 		 *
 		 * @return string
@@ -72,9 +86,11 @@
 		 */
 		public function setPartNameType($partNameType)
 		{
-		    $this->partNameType = $partNameType;
-
-		    return $this;
+			if(array_search($partNameType, $this->partNameTypeEnum, $strict = TRUE)) {
+				$this->partNameType = $partNameType;
+			} else {
+				$this->partNameType = $this->partNameTypeEnum[0];
+			}
 		}
 
 		/**
