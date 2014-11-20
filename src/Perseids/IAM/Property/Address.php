@@ -67,6 +67,7 @@
 		public function __construct() {
 			$this->addExclusion("addressTypeEnum");
 			$this->addExclusion("defaultAddressType");
+			$this->addRequired("addressType");
 		}
 
 		/**
@@ -188,10 +189,10 @@
 		/**
 		 * Set the address type
 		 * @param string The address type. Can only be part of (HOME, WORK, OTHER, SABBATICAL)
-		 * @return \Perseids\IAM\BSP\Contact\Address This object
+		 * @return self
 		 */
 		public function setAddressType($addressType){
-			if(array_search($addressType, $this->addressTypeEnum, $strict = TRUE)) {
+			if(array_search($addressType, $this->addressTypeEnum, $strict = TRUE) !== false) {
 				$this->addressType = $addressType;
 			} else {
 				$this->addressType = $this->defaultAddressType;
