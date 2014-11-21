@@ -124,5 +124,28 @@
 		public function addSourceId($idP) {
 			return $this->addObjectToList("sourceId", $idP, "Perseids\IAM\Property\IdentityProvider");
 		}
-	}
+
+
+		/**
+		 * Gets the List of sourceId identifiers.
+		 *
+		 * @return array
+		 */
+		public function getSourceId()
+		{
+		    return $this->sourceId;
+		}
+
+		/**
+		 * Sets the List of sourceId identifiers.
+		 *
+		 * @param array $sourceId the source id
+		 *
+		 * @return self
+		 */
+		protected function setSourceId(array $sourceId)
+		{
+			return $this->setListOfObject("sourceId", $sourceId, "Perseids\IAM\Property\IdentityProvider");
+		}
+}
 ?>

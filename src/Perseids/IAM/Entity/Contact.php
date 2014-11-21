@@ -204,11 +204,21 @@
 		 */
 		public function setIMs(array $IMs)
 		{
-		    $this->IMs = $IMs;
-
-		    return $this;
+			return $this->setListOfObject("IMs", $IMs, "Perseids\IAM\Property\IM");
 		}
 
+
+		/**
+		 * Add this IM to our IMs list
+		 *
+		 * @param array $IMs the ims
+		 *
+		 * @return self
+		 */
+		public function addIMs(IM $IM)
+		{
+			return $this->addObjectToList("IMs", $IM, "Perseids\IAM\Property\IM");
+		}
 		/**
 		 * Gets the The contact's address.
 		 *

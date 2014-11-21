@@ -176,6 +176,22 @@
 		}
 
 		/**
+		 * Set a list of object
+		 * Helper function for setter with array with specific object
+		 * @param string $varname The property of the class to be modified
+		 * @param object $values A list of object to set for the property
+		 * @param string $expectedType The name of the class expected
+		 * @return self
+		 */
+		protected function setListOfObject($varname, $values, $expectedType) {
+			$this->{$varname} = array();	#We reset the property
+			while(list($key, $value) = each($values)) {
+				$this->addObjectToList($varname, $value, $expectedType);
+			}
+			return $this;
+		}
+
+		/**
 		 * Add an object and check it's validity to a list
 		 * Helper function for setter with array with specific object
 		 * @param string $varname The property of the class to be modified
