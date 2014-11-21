@@ -82,7 +82,7 @@
 		function __construct() {
 			parent::__construct();
 			$this->addExclusion("contactId");
-			$this->addRequired("email");
+			$this->addRequired("emails");
 		}
 
 		/**

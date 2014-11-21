@@ -1,12 +1,13 @@
 <?php
 	namespace Perseids\IAM\Entity;
 
-	use Perseids\IAM\Entity\Abstraction\EntityBase;
-	use Perseids\IAM\Entity\Abstraction\EntityInterface;
+	use Perseids\IAM\Entity\Abstractions\EntityBase;
+	use Perseids\IAM\Entity\Abstractions\EntityInterface;
 	use Perseids\IAM\Entity\Contact;
 
 	use Perseids\IAM\Property\OtherProfile;
-	use Perseids\IAM\Property\InterestExpertise;
+	use Perseids\IAM\Property\Interest;
+	use Perseids\IAM\Property\Expertise;
 
 	class Profile extends EntityBase implements EntityInterface {
 		/**
@@ -20,6 +21,12 @@
 		 * @var string 
 		 */
 		protected $path = "person/{{personID}}/profile";
+
+		/**
+		 * The profile UUID on the BSP
+		 * @var string
+		 */
+		protected $profileIdentifier;
 
 		/**
 		 * The main node name
@@ -84,102 +91,26 @@
 		function __construct() {
 			parent::__construct();
 			$this->addRequired("profileContact");
-		}
-	
-		/**
-		 * Gets the The namespace for this node.
-		 *
-		 * @return string
-		 */
-		public function getNamespace()
-		{
-		    return $this->namespace;
+			$this->addExclusion("profileIdentifier");
 		}
 
+
 		/**
-		 * Sets the The namespace for this node.
-		 *
-		 * @param string $namespace the namespace
-		 *
+		 * Set the UUID of this profile
+		 * @param string $UUID [description]
 		 * @return self
 		 */
-		protected function setNamespace($namespace)
-		{
-		    $this->namespace = $namespace;
-
-		    return $this;
-		}
+		public function setUUID($UUID) {
+			$this->profileIdentifier = $BSPUuid;
+			return $this;
+		} 
 
 		/**
-		 * Gets the The URL path endpoint for this object.
-		 *
-		 * @return string
+		 * Get the UUID of this profile
+		 * @return string 
 		 */
-		public function getPath()
-		{
-		    return $this->path;
-		}
-
-		/**
-		 * Sets the The URL path endpoint for this object.
-		 *
-		 * @param string $path the path
-		 *
-		 * @return self
-		 */
-		protected function setPath($path)
-		{
-		    $this->path = $path;
-
-		    return $this;
-		}
-
-		/**
-		 * Gets the The main node name.
-		 *
-		 * @return string
-		 */
-		public function getNode()
-		{
-		    return $this->node;
-		}
-
-		/**
-		 * Sets the The main node name.
-		 *
-		 * @param string $node the node
-		 *
-		 * @return self
-		 */
-		protected function setNode($node)
-		{
-		    $this->node = $node;
-
-		    return $this;
-		}
-
-		/**
-		 * Gets the The main node attributes.
-		 *
-		 * @return string
-		 */
-		public function getNodeAttributes()
-		{
-		    return $this->nodeAttributes;
-		}
-
-		/**
-		 * Sets the The main node attributes.
-		 *
-		 * @param string $nodeAttributes the node attributes
-		 *
-		 * @return self
-		 */
-		protected function setNodeAttributes($nodeAttributes)
-		{
-		    $this->nodeAttributes = $nodeAttributes;
-
-		    return $this;
+		public function getUUID() {
+			return $this->profileIdentifier;
 		}
 
 		/**
@@ -199,7 +130,7 @@
 		 *
 		 * @return self
 		 */
-		protected function setProfileContact(Contact $profileContact)
+		public function setProfileContact(Contact $profileContact)
 		{
 		    $this->profileContact = $profileContact;
 
@@ -223,9 +154,9 @@
 		 *
 		 * @return self
 		 */
-		protected function setInterest(array $interest)
+		public function setInterest(array $interest)
 		{
-			return $this->setListOfObject("interest", $interest, "Perseids/IAM/Property/InterestExpertise");
+			return $this->setListOfObject("interest", $interest, "Perseids\IAM\Property\Interest");
 		}
 
 		/**
@@ -245,9 +176,21 @@
 		 *
 		 * @return self
 		 */
-		protected function setExpertise(array $expertise)
+		public function setExpertise(array $expertise)
 		{
-			return $this->setListOfObject("expertise", $expertise, "Perseids/IAM/Property/InterestExpertise");
+			return $this->setListOfObject("expertise", $expertise, "Perseids\IAM\Property\Expertise");
+		}
+
+		/**
+		 * Add an Expertise to the users.
+		 *
+		 * @param array $expertise the expertise
+		 *
+		 * @return self
+		 */
+		public function addExpertise(Expertise $expertise)
+		{
+			return $this->addObjectToList("expertise", $expertise, "Perseids\IAM\Property\Expertise");
 		}
 
 		/**
@@ -267,7 +210,7 @@
 		 *
 		 * @return self
 		 */
-		protected function setExternalAffiliation(array $externalAffiliation)
+		public function setExternalAffiliation(array $externalAffiliation)
 		{
 		    $this->externalAffiliation = $externalAffiliation;
 
@@ -291,7 +234,7 @@
 		 *
 		 * @return self
 		 */
-		protected function setPreferredLanguage($preferredLanguage)
+		public function setPreferredLanguage($preferredLanguage)
 		{
 		    $this->preferredLanguage = $preferredLanguage;
 
@@ -315,7 +258,7 @@
 		 *
 		 * @return self
 		 */
-		protected function setLanguageUsedInScholarship(array $languageUsedInScholarship)
+		public function setLanguageUsedInScholarship(array $languageUsedInScholarship)
 		{
 		    $this->languageUsedInScholarship = $languageUsedInScholarship;
 
@@ -339,7 +282,7 @@
 		 *
 		 * @return self
 		 */
-		protected function setProfileInformation($profileInformation)
+		public function setProfileInformation($profileInformation)
 		{
 		    $this->profileInformation = $profileInformation;
 
@@ -363,8 +306,8 @@
 		 *
 		 * @return self
 		 */
-		protected function setOtherProfile(array $otherProfile)
+		public function setOtherProfile(array $otherProfile)
 		{
-			return $this->setListOfObject("otherProfile", $otherProfile, "Perseids/IAM/Property/OtherProfile");
+			return $this->setListOfObject("otherProfile", $otherProfile, "Perseids\IAM\Property\OtherProfile");
 		}
 }

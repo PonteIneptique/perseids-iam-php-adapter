@@ -88,7 +88,7 @@
 					}
 					break;
 				case "object":
-					if(get_parent_class($value) === "Perseids\IAM\Property\Abstractions\PropertyBase") {
+					if(get_parent_class($value) === "Perseids\IAM\Property\Abstractions\PropertyBase" || get_parent_class($value) === "Perseids\IAM\Entity\Abstractions\EntityBase") {
 						if(method_exists($value, "getUUID") === true && $value->getUUID() !== null) {
 							$xml[] = "<".$namespace.":".$name.">".$value->getUUID()."</".$namespace.":".$name.">";
 						} else {
