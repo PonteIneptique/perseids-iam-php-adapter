@@ -52,7 +52,7 @@
 		 * Should be an array of strings
 		 * @var array
 		 */
-		protected $email;
+		protected $emails;
 
 		/**
 		 * The Contact's IMs
@@ -163,9 +163,9 @@
 		 *
 		 * @return array
 		 */
-		public function getEmail()
+		public function getEmails()
 		{
-		    return $this->email;
+		    return $this->emails;
 		}
 
 		/**
@@ -176,9 +176,9 @@
 		 *
 		 * @return self
 		 */
-		public function setEmail(array $email)
+		public function setEmails(array $emails)
 		{
-		    $this->email = $email;
+		    $this->emails = $emails;
 
 		    return $this;
 		}

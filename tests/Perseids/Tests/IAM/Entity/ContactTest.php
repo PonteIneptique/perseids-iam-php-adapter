@@ -50,7 +50,7 @@
 			$this->contact
 				->setName($name)
 				->setDisplayName("JohnDoe123")
-				->setEmail(array("johndoe@aoldied.com"))
+				->setEmails(array("johndoe@aoldied.com"))
 				->setIMs(array($IM))
 				->setTelephone(array($tel));
 		}
@@ -67,7 +67,7 @@
 		</contacts:partName>
 	</contacts:name>
 	<contacts:displayName>JohnDoe123</contacts:displayName>
-	<contacts:email>johndoe@aoldied.com</contacts:email>
+	<contacts:emails>johndoe@aoldied.com</contacts:emails>
 	<contacts:iMs>
 		<contacts:instantMessagingType>SKYPE</contacts:instantMessagingType>
 		<contacts:account>johndoe</contacts:account>
@@ -97,7 +97,7 @@
 					)
 				),
 				"displayName" => "JohnDoe123",
-				"email" => array(
+				"emails" => array(
 					0 => "johndoe@aoldied.com"
 				),
 				"IMs" => array(
