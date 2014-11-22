@@ -13,3 +13,6 @@ script: phpunit --configuration phpunit.xml.dist --coverage-text
 # configure notifications (email, IRC, campfire etc)
 notifications:
   irc: "irc.freenode.org#yourfavouriteroomfortravis"
+
+install:
+   - composer install --dev
