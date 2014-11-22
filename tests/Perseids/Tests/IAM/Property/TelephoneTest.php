@@ -10,7 +10,7 @@
 			$tel
 				->setTelephoneNumber("123")
 				->setTelephoneType("FAX");
-			$expected = "<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>";
+			$expected = "<contacts:telephones>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephones>";
 			$this->assertEquals($expected, $tel->getXML());
 		}
 		public function testSerialized() {
@@ -28,7 +28,7 @@
 			$tel
 				->setTelephoneNumber("123");
 			$tel->getSerialized();
-			$expected = "<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>";
+			$expected = "<contacts:telephones>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephones>";
 		}
 
 		public function testRequiredWorksWithXML() {
@@ -38,6 +38,6 @@
 			$tel
 				->setTelephoneNumber("123");
 			$tel->getXML();
-			$expected = "<contacts:telephone>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephone>";
+			$expected = "<contacts:telephones>\n<contacts:telephoneNumber>123</contacts:telephoneNumber>\n<contacts:telephoneType>FAX</contacts:telephoneType>\n</contacts:telephones>";
 		}
 	}

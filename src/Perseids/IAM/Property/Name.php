@@ -40,16 +40,16 @@
 		protected $honorificPrefix;
 
 		/**
-		 * Honorifix Suffix
+		 * Honorific Suffix
 		 * @var string
 		 */
 		protected $honorificSuffix;
 
 		/**
-		 * List of PartName object
+		 * List of PartNames object
 		 * @var array(\Perseids\IAM\Entity\PartName);
 		 */
-		protected $partName = array();
+		protected $partNames = array();
 
 
 	
@@ -198,26 +198,36 @@
 	}
 
 	/**
-	 * Gets the List of PartName object.
+	 * Gets the List of PartNames object.
 	 *
 	 * @return array(\Perseids\IAM\Entity\PartName);
 	 */
-	public function getPartName()
+	public function getPartNames()
 	{
-	    return $this->partName;
+	    return $this->partNames;
 	}
 
 	/**
-	 * Sets the List of PartName object.
+	 * Sets the List of PartNames object.
 	 *
-	 * @param array(\Perseids\IAM\Entity\PartName); $partName the part name
+	 * @param array(\Perseids\IAM\Entity\PartName); $partNames the part name
 	 *
 	 * @return self
 	 */
-	public function setPartName($partName)
+	public function setPartNames($partNames)
 	{
-	    $this->partName = $partName;
+		return $this->setListOfObject("partNames", $partNames, "Perseids\IAM\Property\PartName");
+	}
 
-	    return $this;
+	/**
+	 * Add a PartNames to he List of PartNames object.
+	 *
+	 * @param \Perseids\IAM\Entity\PartName $partNames the part name
+	 *
+	 * @return self
+	 */
+	public function addPartNames(PartName $partNames)
+	{
+		return $this->addObjectToList("partNames", $partNames, "Perseids\IAM\Property\PartName");
 	}
 }

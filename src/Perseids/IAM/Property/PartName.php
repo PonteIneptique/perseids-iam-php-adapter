@@ -8,13 +8,13 @@
 		 * The name for the mother node
 		 * @var string
 		 */
-		protected $node = "partName";
+		protected $node = "partNames";
 
 		/**
 		 * Part of the name
 		 * @var string
 		 */
-		protected $partName;
+		protected $partNameContent;
 
 		/**
 		 * Part of the name's type
@@ -40,7 +40,7 @@
 		 */
 		public function __construct() {
 			$this->addExclusion("partNameTypeEnum");
-			$this->addRequired(array("partName", "partNameType"));
+			$this->addRequired(array("partNameContent", "partNameType"));
 		}
 
 		/**
@@ -48,21 +48,21 @@
 		 *
 		 * @return string
 		 */
-		public function getPartName()
+		public function getPartNameContent()
 		{
-		    return $this->partName;
+		    return $this->partNameContent;
 		}
 
 		/**
 		 * Sets the Part of the name.
 		 *
-		 * @param string $partName the part name
+		 * @param string $partNameContent the part name
 		 *
 		 * @return self
 		 */
-		public function setPartName($partName)
+		public function setPartNameContent($partNameContent)
 		{
-		    $this->partName = $partName;
+		    $this->partNameContent = $partNameContent;
 
 		    return $this;
 		}
@@ -91,6 +91,7 @@
 			} else {
 				$this->partNameType = $this->partNameTypeEnum[0];
 			}
+			return $this;
 		}
 
 		/**

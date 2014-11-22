@@ -6,9 +6,11 @@
 	use Perseids\IAM\Entity\Abstractions\EntityInterface;
 
 	use Perseids\IAM\Property\Name;
+	use Perseids\IAM\Property\PartName;
 	use Perseids\IAM\Property\IM;
 	use Perseids\IAM\Property\Address;
 	use Perseids\IAM\Property\Telephone;
+	use Perseids\IAM\Property\Email;
 
 	class Contact extends EntityBase implements EntityInterface {
 		/**
@@ -71,13 +73,19 @@
 		 * The contact's note
 		 * @var string
 		 */
-		protected $contactNode;
+		protected $contactNote;
+
+		/**
+		 * List of PartNames object
+		 * @var array(\Perseids\IAM\Entity\PartNames);
+		 */
+		protected $partNames = array();
 
 		/**
 		 * The contact's telephone
 		 * @var array
 		 */
-		protected $telephone;
+		protected $telephones;
 
 		function __construct() {
 			parent::__construct();
@@ -178,9 +186,18 @@
 		 */
 		public function setEmails(array $emails)
 		{
-		    $this->emails = $emails;
+			return $this->setListOfObject("emails", $emails, "Perseids\IAM\Property\Email");
+		}
 
-		    return $this;
+		/**
+		 * Add an email to contact
+		 *
+		 * @param string $emails An email
+		 * @return self
+		 */
+		public function addEmails(Email $emails)
+		{
+			return $this->addObjectToList("emails", $emails, "Perseids\IAM\Property\Email");
 		}
 
 		/**
@@ -238,31 +255,42 @@
 		 */
 		public function setAddress(array $address)
 		{
-		    $this->address = $address;
-
-		    return $this;
+			return $this->setListOfObject("address", $address, "Perseids\IAM\Property\Address");
 		}
+
+		/**
+		 * Add an address to the object.
+		 *
+		 * @param \Perseids\IAM\Entity\Address $address the part name
+		 *
+		 * @return self
+		 */
+		public function addAddress(Address $address)
+		{
+			return $this->addObjectToList("address", $address, "Perseids\IAM\Property\Address");
+		}
+
 
 		/**
 		 * Gets the The contact's note.
 		 *
 		 * @return string
 		 */
-		public function getContactNode()
+		public function getContactNote()
 		{
-		    return $this->contactNode;
+		    return $this->contactNote;
 		}
 
 		/**
 		 * Sets the The contact's note.
 		 *
-		 * @param string $contactNode the contact node
+		 * @param string $contactNote the contact node
 		 *
 		 * @return self
 		 */
-		public function setContactNode($contactNode)
+		public function setContactNote($contactNote)
 		{
-		    $this->contactNode = $contactNode;
+		    $this->contactNote = $contactNote;
 
 		    return $this;
 		}
@@ -283,11 +311,56 @@
 		 *
 		 * @return self
 		 */
-		public function setTelephone(array $telephone)
+		public function setTelephones(array $telephones)
 		{
-		    $this->telephone = $telephone;
+			return $this->setListOfObject("telephones", $telephones, "Perseids\IAM\Property\Telephone");
+		}
 
-		    return $this;
+		/**
+		 * Add a telephone to he List of PartNames object.
+		 *
+		 * @param \Perseids\IAM\Entity\Telephone $telephones the part name
+		 *
+		 * @return self
+		 */
+		public function addTelephones(Telephone $telephones)
+		{
+			return $this->addObjectToList("telephones", $telephones, "Perseids\IAM\Property\Telephone");
+		}
+
+
+		/**
+		 * Gets the List of PartNames object.
+		 *
+		 * @return array(\Perseids\IAM\Entity\PartNames);
+		 */
+		public function getPartNames()
+		{
+		    return $this->partNames;
+		}
+
+		/**
+		 * Sets the List of PartNames object.
+		 *
+		 * @param array(\Perseids\IAM\Entity\PartName); $partNames the part name
+		 *
+		 * @return self
+		 */
+		public function setPartNames($partNames)
+		{
+			return $this->setListOfObject("partNames", $partNames, "Perseids\IAM\Property\PartName");
+		}
+
+		/**
+		 * Add a PartNames to he List of PartNames object.
+		 *
+		 * @param \Perseids\IAM\Entity\PartName $partNames the part name
+		 *
+		 * @return self
+		 */
+		public function addPartNames(PartName $partNames)
+		{
+			return $this->addObjectToList("partNames", $partNames, "Perseids\IAM\Property\PartName");
 		}
 
 		/**

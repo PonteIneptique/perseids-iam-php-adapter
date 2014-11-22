@@ -204,6 +204,9 @@
 		 * @return self
 		 */
 		protected function addObjectToList($varname, $value, $expectedType) {
+			if(gettype($value) !== "object") {
+				throw(new \InvalidArgumentException($expectedType." expected. ". gettype($value) . " given."));
+			}
 			if(get_class($value) === $expectedType) {
 				$this->{$varname}[] = $value;
 			} else {

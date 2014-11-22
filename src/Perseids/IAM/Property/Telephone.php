@@ -8,7 +8,7 @@
 		 * The name for the mother node
 		 * @var string
 		 */
-		protected $node = "telephone";
+		protected $node = "telephones";
 
 		/**
 		 * Telephone Number
@@ -33,10 +33,22 @@
 		 */
 		protected $defaultTelephoneType = "VOICE";
 
+		/**
+		 * Name of the location type
+		 * @var string
+		 */
+		protected $locationType;
+
+		/**
+		 * Location type Enumeration
+		 * @var array
+		 */
+		protected $locationTypeEnum = ["HOME", "WORK", "OTHER", "SABBATICAL", "MOBILE"];
 
 		public function __construct() {
 			$this->addExclusion("defaultTelephoneType");
 			$this->addExclusion("telephoneTypeEnum");
+			$this->addExclusion("locationTypeEnum");
 			$this->addRequired(array("telephoneType", "telephoneNumber"));
 		}
 
@@ -92,5 +104,41 @@
 				$this->telephoneType = $this->defaultTelephoneType;
 			}
 			return $this;
+		}
+
+		/**
+		 * Gets the Name of the location type.
+		 *
+		 * @return string
+		 */
+		public function getLocationType()
+		{
+		    return $this->locationType;
+		}
+
+		/**
+		 * Sets the Name of the location type.
+		 *
+		 * @param string $locationType the location type
+		 *
+		 * @return self
+		 */
+		public function setLocationType($locationType)
+		{
+			if(array_search($locationType, $this->locationTypeEnum, $strict = TRUE)) {
+				$this->locationType = $locationType;
+			} else {
+				$this->locationType = $this->getLocationTypeEnum()[0];
+			}
+
+		    return $this;
+		}
+
+		/**
+		 * Get the list of available location type
+		 * @return array
+		 */
+		public function getLocationTypeEnum() {
+			return $this->locationTypeEnum;
 		}
 	}

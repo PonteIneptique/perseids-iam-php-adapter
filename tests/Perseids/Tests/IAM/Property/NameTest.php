@@ -29,24 +29,24 @@
 			$partname = array();
 
 			$partname[0] = new PartName();
-			$partname[0]->setPartName("Test");
+			$partname[0]->setPartNameContent("Test");
 			$partname[0]->setPartNameType("HONORIFIC_PREFIX");
 
 			$partname[1] = new PartName();
-			$partname[1]->setPartName("Louie");
+			$partname[1]->setPartNameContent("Louie");
 			$partname[1]->setPartNameType("NAME_GIVEN");
 
-			$name->setPartName($partname);
+			$name->setPartNames($partname);
 			$expected = array(
 				"familyName" => "Doe", 
 				"givenName" => "John", 
-				"partName" => array(
+				"partNames" => array(
 					0 => array(
-						"partName" => "Test", 
+						"partNameContent" => "Test", 
 						"partNameType" => "HONORIFIC_PREFIX"
 					),
 					1 => array(
-						"partName" => "Louie", 
+						"partNameContent" => "Louie", 
 						"partNameType" => "NAME_GIVEN"
 					)
 				)
@@ -61,15 +61,15 @@
 			$partname = array();
 
 			$partname[0] = new PartName();
-			$partname[0]->setPartName("Test");
+			$partname[0]->setPartNameContent("Test");
 			$partname[0]->setPartNameType("HONORIFIC_PREFIX");
 
 			$partname[1] = new PartName();
-			$partname[1]->setPartName("Louie");
+			$partname[1]->setPartNameContent("Louie");
 			$partname[1]->setPartNameType("NAME_GIVEN");
 
-			$name->setPartName($partname);
-			$expected = "<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n<contacts:partName>\n<contacts:partName>Test</contacts:partName>\n<contacts:partNameType>HONORIFIC_PREFIX</contacts:partNameType>\n</contacts:partName>\n<contacts:partName>\n<contacts:partName>Louie</contacts:partName>\n<contacts:partNameType>NAME_GIVEN</contacts:partNameType>\n</contacts:partName>\n</contacts:name>";
+			$name->setPartNames($partname);
+			$expected = "<contacts:name>\n<contacts:familyName>Doe</contacts:familyName>\n<contacts:givenName>John</contacts:givenName>\n<contacts:partNames>\n<contacts:partNameContent>Test</contacts:partNameContent>\n<contacts:partNameType>HONORIFIC_PREFIX</contacts:partNameType>\n</contacts:partNames>\n<contacts:partNames>\n<contacts:partNameContent>Louie</contacts:partNameContent>\n<contacts:partNameType>NAME_GIVEN</contacts:partNameType>\n</contacts:partNames>\n</contacts:name>";
 			$this->assertEquals($expected, $name->getXML());
 		}
 	}

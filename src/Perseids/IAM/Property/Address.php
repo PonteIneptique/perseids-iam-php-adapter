@@ -50,24 +50,24 @@
 		 * Address type
 		 * @var string
 		 */
-		protected $addressType;
+		protected $locationType;
 
 		/**
 		 * Address type Enum
 		 * @var array
 		 */
-		protected $addressTypeEnum = ["HOME", "WORK", "OTHER", "SABBATICAL"];
+		protected $locationTypeEnum = ["HOME", "WORK", "OTHER", "SABBATICAL"];
 
 		/**
 		 * Address Type default
 		 * @var string
 		 */
-		protected $defaultAddressType = "OTHER";
+		protected $defaultLocationType = "OTHER";
 
 		public function __construct() {
-			$this->addExclusion("addressTypeEnum");
-			$this->addExclusion("defaultAddressType");
-			$this->addRequired("addressType");
+			$this->addExclusion("locationTypeEnum");
+			$this->addExclusion("defaultLocationType");
+			$this->addRequired("locationType");
 		}
 
 		/**
@@ -182,8 +182,8 @@
 		 * Get the address type
 		 * @return string The address type
 		 */
-		public function getAddressType(){
-			return $this->addressType;
+		public function getLocationType(){
+			return $this->locationType;
 		}
 
 		/**
@@ -191,11 +191,11 @@
 		 * @param string The address type. Can only be part of (HOME, WORK, OTHER, SABBATICAL)
 		 * @return self
 		 */
-		public function setAddressType($addressType){
-			if(array_search($addressType, $this->addressTypeEnum, $strict = TRUE) !== false) {
-				$this->addressType = $addressType;
+		public function setLocationType($locationType){
+			if(array_search($locationType, $this->locationTypeEnum, $strict = TRUE) !== false) {
+				$this->locationType = $locationType;
 			} else {
-				$this->addressType = $this->defaultAddressType;
+				$this->locationType = $this->defaultLocationType;
 			}
 			return $this;
 		}
@@ -204,7 +204,7 @@
 		 * Get the list of available address type
 		 * @return array
 		 */
-		public function getAddressTypeEnum() {
-			return $this->addressTypeEnum;
+		public function getLocationTypeEnum() {
+			return $this->locationTypeEnum;
 		}
 	}

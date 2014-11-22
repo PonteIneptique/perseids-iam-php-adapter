@@ -12,6 +12,7 @@
 	use Perseids\IAM\Property\Interest;
 	use Perseids\IAM\Property\Expertise;
 	use Perseids\IAM\Property\OtherProfile;
+	use Perseids\IAM\Property\Email;
 
 	class ProfileTest extends \PHPUnit_Framework_TestCase {
 		public function testGetSerialized() {
@@ -19,9 +20,12 @@
 			$expertise
 				->setExpertise("Anonymous");
 
+			$email = new Email();
+			$email->setEmail("johndoe@domain.com");
+
 			$contact = new Contact();
 			$contact
-				->setEmails(array("johndoe@domain.com"));
+				->setEmails(array($email));
 			
 			$profile = new Profile();
 			$profile
@@ -30,7 +34,9 @@
 
 			$expected = [
 				"profileContact" => [
-					"emails" => ["johndoe@domain.com"]
+					"emails" => [
+						["email" => "johndoe@domain.com"]
+					]
 				],
 				"expertises" => [
 					["expertise" => "Anonymous"]
@@ -52,10 +58,12 @@
 				->setProfileName("Some other profile")
 				->setProfileUrl("http://tempuri.org");
 
+			$email = new Email();
+			$email->setEmail("johndoe@domain.com");
 
 			$contact = new Contact();
 			$contact
-				->setEmails(array("johndoe@domain.com"))
+				->setEmails(array($email))
 				->setUUID("urn:uuid:28ae4ba0-40f2-4ccc-86f9-8577c29005a8");
 			
 			$profile = new Profile();
