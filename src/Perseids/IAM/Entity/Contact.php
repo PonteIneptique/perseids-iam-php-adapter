@@ -299,11 +299,20 @@
 			$this->contactId = $UUID;
 			return $this;
 		}
+
 		/**
 		 * Get the UUID of the object
 		 * @return string
 		 */
 		public function getUUID() {
 			return $this->contactId;
+		}
+		
+		/**
+		 * Get the name of the UUID node
+		 * @return string
+		 */
+		public function getUUIDNode() {
+			return "contactId";
 		}
 }

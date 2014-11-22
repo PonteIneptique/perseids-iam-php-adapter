@@ -4,6 +4,7 @@
 	use Perseids\IAM\Entity\Abstractions\EntityBase;
 	use Perseids\IAM\Entity\Abstractions\EntityInterface;
 	use Perseids\IAM\Entity\Contact;
+	use Perseids\IAM\Entity\Person;
 
 	use Perseids\IAM\Property\OtherProfile;
 	use Perseids\IAM\Property\Interest;
@@ -38,7 +39,7 @@
 		 * The main node attributes
 		 * @var string
 		 */
-		protected $nodeAttributes = "person:confidential=\"false\" person:primary=\"true\" xmlns:contacts=\"http://projectbamboo.org/bsp/services/core/contact\" xmlns:person=\"http://projectbamboo.org/bsp/BambooPerson\"";
+		protected $nodeAttributes = "xmlns:contacts=\"http://projectbamboo.org/bsp/services/core/contact\" xmlns:person=\"http://projectbamboo.org/bsp/BambooPerson\"";
 
 		/**
 		 * The Contact tied to the profile
@@ -50,19 +51,19 @@
 		 * Interest of the users
 		 * @var array
 		 */
-		protected $interest;
+		protected $interests;
 
 		/**
 		 * Expertise of the users
 		 * @var array
 		 */
-		protected $expertise;
+		protected $expertises;
 
 		/**
 		 * External affiliations
 		 * @var array
 		 */
-		protected $externalAffiliation;
+		protected $externalAffiliations;
 
 		/**
 		 * Preferred Language
@@ -74,7 +75,7 @@
 		 * Language used in Scholarship
 		 * @var array
 		 */
-		protected $languageUsedInScholarship;
+		protected $languageUsedInScholarships;
 
 		/**
 		 * Profile information / note
@@ -92,6 +93,7 @@
 			parent::__construct();
 			$this->addRequired("profileContact");
 			$this->addExclusion("profileIdentifier");
+			$this->parent = new Person();
 		}
 
 
@@ -138,25 +140,37 @@
 		}
 
 		/**
+		 * Add an Interests to the users.
+		 *
+		 * @param array $interests the expertise
+		 *
+		 * @return self
+		 */
+		public function addInterests(Interest $interests)
+		{
+			return $this->addObjectToList("interests", $interests, "Perseids\IAM\Property\Interest");
+		}
+
+		/**
 		 * Gets the Interest of the users.
 		 *
 		 * @return array
 		 */
-		public function getInterest()
+		public function getInterests()
 		{
-		    return $this->interest;
+		    return $this->interests;
 		}
 
 		/**
 		 * Sets the Interest of the users.
 		 *
-		 * @param array $interest the interest
+		 * @param array $interests the interest
 		 *
 		 * @return self
 		 */
-		public function setInterest(array $interest)
+		public function setInterests(array $interests)
 		{
-			return $this->setListOfObject("interest", $interest, "Perseids\IAM\Property\Interest");
+			return $this->setListOfObject("interests", $interests, "Perseids\IAM\Property\Interest");
 		}
 
 		/**
@@ -164,33 +178,33 @@
 		 *
 		 * @return array
 		 */
-		public function getExpertise()
+		public function getExpertises()
 		{
-		    return $this->expertise;
+		    return $this->expertises;
 		}
 
 		/**
 		 * Sets the Expertise of the users.
 		 *
-		 * @param array $expertise the expertise
+		 * @param array $expertises the expertise
 		 *
 		 * @return self
 		 */
-		public function setExpertise(array $expertise)
+		public function setExpertises(array $expertises)
 		{
-			return $this->setListOfObject("expertise", $expertise, "Perseids\IAM\Property\Expertise");
+			return $this->setListOfObject("expertises", $expertises, "Perseids\IAM\Property\Expertise");
 		}
 
 		/**
 		 * Add an Expertise to the users.
 		 *
-		 * @param array $expertise the expertise
+		 * @param array $expertises the expertise
 		 *
 		 * @return self
 		 */
-		public function addExpertise(Expertise $expertise)
+		public function addExpertises(Expertise $expertises)
 		{
-			return $this->addObjectToList("expertise", $expertise, "Perseids\IAM\Property\Expertise");
+			return $this->addObjectToList("expertises", $expertises, "Perseids\IAM\Property\Expertise");
 		}
 
 		/**
@@ -198,21 +212,21 @@
 		 *
 		 * @return array
 		 */
-		public function getExternalAffiliation()
+		public function getExternalAffiliations()
 		{
-		    return $this->externalAffiliation;
+		    return $this->externalAffiliations;
 		}
 
 		/**
 		 * Sets the External affiliations.
 		 *
-		 * @param array $externalAffiliation the external affiliation
+		 * @param array $externalAffiliations the external affiliation
 		 *
 		 * @return self
 		 */
-		public function setExternalAffiliation(array $externalAffiliation)
+		public function setExternalAffiliations(array $externalAffiliations)
 		{
-		    $this->externalAffiliation = $externalAffiliation;
+		    $this->externalAffiliations = $externalAffiliations;
 
 		    return $this;
 		}
@@ -246,9 +260,9 @@
 		 *
 		 * @return array
 		 */
-		public function getLanguageUsedInScholarship()
+		public function getLanguageUsedInScholarships()
 		{
-		    return $this->languageUsedInScholarship;
+		    return $this->languageUsedInScholarships;
 		}
 
 		/**
@@ -258,9 +272,9 @@
 		 *
 		 * @return self
 		 */
-		public function setLanguageUsedInScholarship(array $languageUsedInScholarship)
+		public function setLanguageUsedInScholarships(array $languageUsedInScholarships)
 		{
-		    $this->languageUsedInScholarship = $languageUsedInScholarship;
+		    $this->languageUsedInScholarships = $languageUsedInScholarships;
 
 		    return $this;
 		}
@@ -294,9 +308,9 @@
 		 *
 		 * @return array
 		 */
-		public function getOtherProfile()
+		public function getOtherProfiles()
 		{
-		    return $this->otherProfile;
+		    return $this->otherProfiles;
 		}
 
 		/**
@@ -306,8 +320,28 @@
 		 *
 		 * @return self
 		 */
-		public function setOtherProfile(array $otherProfile)
+		public function setOtherProfiles(array $otherProfiles)
 		{
-			return $this->setListOfObject("otherProfile", $otherProfile, "Perseids\IAM\Property\OtherProfile");
+			return $this->setListOfObject("otherProfiles", $otherProfiles, "Perseids\IAM\Property\OtherProfile");
+		}
+
+		/**
+		 * Add one Other profile informations.
+		 *
+		 * @param OtherProfile $otherProfile the other profile
+		 *
+		 * @return self
+		 */
+		public function addOtherProfiles(OtherProfile $otherProfiles)
+		{
+			return $this->addObjectToList("otherProfiles", $otherProfiles, "Perseids\IAM\Property\OtherProfile");
+		}
+
+		/**
+		 * Get the name of the UUID node
+		 * @return string
+		 */
+		public function getUUIDNode() {
+			return "profileIdentifier";
 		}
 }

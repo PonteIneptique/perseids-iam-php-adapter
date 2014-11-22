@@ -25,11 +25,11 @@
 		 * The profile url
 		 * @var string
 		 */
-		protected $profileURL;
+		protected $profileUrl;
 
 		public function __construct() {
-			parent::__construct();
-			$this->addRequired(["profileURL", "profileName"]);
+			#parent::__construct();
+			$this->addRequired(["profileUrl", "profileName"]);
 		}
 	
 		/**
@@ -61,21 +61,21 @@
 		 *
 		 * @return string
 		 */
-		public function getProfileURL()
+		public function getProfileUrl()
 		{
-		    return $this->profileURL;
+		    return $this->profileUrl;
 		}
 
 		/**
 		 * Sets the The profile url.
 		 *
-		 * @param string $profileURL the profile
+		 * @param string $profileUrl the profile
 		 *
 		 * @return self
 		 */
-		public function setProfileURL($profileURL)
+		public function setProfileUrl($profileUrl)
 		{
-		    $this->profileURL = $profileURL;
+		    $this->profileUrl = $profileUrl;
 
 		    return $this;
 		}

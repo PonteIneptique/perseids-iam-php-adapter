@@ -147,5 +147,13 @@
 		{
 			return $this->setListOfObject("sourceId", $sourceId, "Perseids\IAM\Property\IdentityProvider");
 		}
+
+		/**
+		 * Get the name of the UUID node
+		 * @return string
+		 */
+		public function getUUIDNode() {
+			return "personIdentifier";
+		}
 }
 ?>

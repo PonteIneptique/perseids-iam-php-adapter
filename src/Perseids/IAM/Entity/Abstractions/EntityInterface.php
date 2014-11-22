@@ -3,7 +3,7 @@
 
 	use \Perseids\IAM\BSP\Instance;
 	/*
-		Bamboo object represents items that can be posted. They need to implement the function setUUID, getUUID
+		Bamboo object represents items that can be posted. 
 	*/
 	interface EntityInterface {
 		/**
@@ -17,6 +17,12 @@
 		 * @return string
 		 */
 		public function getUUID();
+
+		/**
+		 * Get the name of the UUID node
+		 * @return string
+		 */
+		public function getUUIDNode();
 
 		/**
 		 * Post the current object to the BSP

@@ -47,6 +47,9 @@
 			}
 			$xml = $this->createNode($this->namespace, $this->node, implode("\n", $xml), true, $attributes = $attributes);
 
+			if(method_exists($this, "withParents") === true) {
+				return $this->withParents($xml);
+			}
 			return $xml;
 		}
 
@@ -90,7 +93,7 @@
 				case "object":
 					if(get_parent_class($value) === "Perseids\IAM\Property\Abstractions\PropertyBase" || get_parent_class($value) === "Perseids\IAM\Entity\Abstractions\EntityBase") {
 						if(method_exists($value, "getUUID") === true && $value->getUUID() !== null) {
-							$xml[] = "<".$namespace.":".$name.">".$value->getUUID()."</".$namespace.":".$name.">";
+							$xml[] = $value->getUUIDXML();
 						} else {
 							$xml[] = $value->getXML();
 						}
@@ -100,6 +103,7 @@
 					break;
 			}
 			$xml = implode("\n", $xml);
+
 			return $xml;
 		}
 

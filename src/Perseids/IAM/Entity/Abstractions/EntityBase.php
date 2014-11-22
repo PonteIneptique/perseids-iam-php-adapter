@@ -11,8 +11,15 @@
 		 */
 		protected $path;
 
+		/**
+		 * An object representing the parent
+		 * @var object
+		 */
+		protected $parent = NULL;
+
 		public function __construct() {
 			$this->addExclusion("path");
+			$this->addExclusion("parent");
 		}
 
 		/**
@@ -26,6 +33,70 @@
 			$uuid = $matches["uuid"];
 
 			return $uuid;
+		}
+
+		/**
+		 * Get the namespace
+		 * @return string
+		 */
+		private function getNamespace() {
+			return $this->namespace;
+		}
+
+		/**
+		 * Get the node name
+		 * @return string
+		 */
+		private function getNode() {
+			return $this->node;
+		}
+
+		/**
+		 * Get the node attributes
+		 * @return string
+		 */
+		private function getNodeAttributes() {
+			return $this->nodeAttributes;
+		}
+
+
+		/**
+		 * Returns if needed 
+		 * @param string $xml An xml string to be encapsulated inside a parent node
+		 * @return string
+		 */
+		protected function withParents($xml) {
+			if(gettype($this->parent) === "object") {
+
+				$namespace = $this->parent->getNamespace();
+				$nodeName = $this->parent->getNode();
+				$nodeAttr = $this->parent->getNodeAttributes();
+
+				$node  = "<".$namespace.":".$nodeName." ".$nodeAttr.">\n";
+				$node .= $xml;
+				$node .= "\n</".$namespace.":".$nodeName.">";
+
+				return $node;
+			}
+			return $xml;
+		}
+
+		/**
+		 * Generate XML representing the recorded entity
+		 * @return string
+		 */
+		protected function getUUIDXML () {
+			$namespace = $this->getNamespace();
+			$nodeName = $this->getNode();
+			$uuidNode = $this->getUUIDNode();
+
+			$node  = "<".$namespace.":".$nodeName.">\n";
+			$node .= "<".$namespace.":".$uuidNode.">";
+			$node .= $this->getUUID();
+			$node .= "</".$namespace.":".$uuidNode.">\n";
+			$node .= "</".$namespace.":".$nodeName.">";
+
+			return $node;
 		}
 
 		/**
