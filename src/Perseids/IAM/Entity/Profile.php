@@ -21,7 +21,7 @@
 		 * The URL path endpoint for this object
 		 * @var string 
 		 */
-		protected $path = "person/{{personID}}/profile";
+		protected $path = "persons/{{personID}}/profiles";
 
 		/**
 		 * The profile UUID on the BSP

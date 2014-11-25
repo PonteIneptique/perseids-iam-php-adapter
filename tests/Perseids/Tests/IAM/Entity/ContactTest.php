@@ -125,7 +125,7 @@
 		}
 
 		public function testCreate() {
-			$this->BSP = new Instance("https://services-rep.perseids.org/bsp");
+			$this->BSP = new Instance("https://services.perseids.org/bsp");
 
 			$this->BSP
 				->setBambooPerson($this->AppPerson)
@@ -133,8 +133,8 @@
 				->setVerify(false)
 				->setCertificate(__DIR__ . "/../../../../../certificate/file.pem");
 
-			//$this->contact->create($this->BSP);
-			//print_r($this->contact->getUUID());
+			$this->contact->create($this->BSP);
+			print_r($this->contact->getUUID());
 		}
 
 		public function testExampleXML() {

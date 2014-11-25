@@ -100,6 +100,14 @@
 		}
 
 		/**
+		 * Get the path for the BSP instance
+		 * @return string
+		 */
+		protected function getPath() {
+			return "/".$this->path;
+		}
+
+		/**
 		 * Post the current object to the BSP
 		 * @param Instance $BSP An instance of a BSP
 		 * @return self,boolean 
@@ -111,11 +119,11 @@
 				return false; 
 			}
 			$xml = $this->getXML($attributes = true);
-			$response = $BSP->post("/contacts", "text/xml; charset=UTF-8", $xml);
+			$response = $BSP->post($this->getPath(), "text/xml; charset=UTF-8", $xml);
 			if($response->getStatusCode() === 201) {
 				$uuid = $this->URLtoUUID($response->getHeader("location"));
 				$this->setUUID($uuid);
-				return $self;
+				return $this;
 			}
 			return false;
 		}

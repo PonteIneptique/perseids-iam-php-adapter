@@ -19,7 +19,7 @@
 			$this->AppPerson
 				->setId("urn:uuid:ae4d52d2-d926-48a2-b01f-3e632e3d456d");
 
-			$this->BSP = new Instance("https://services-rep.perseids.org/bsp");
+			$this->BSP = new Instance("https://services.perseids.org/bsp");
 
 			$this->BSP
 				->setBambooPerson($this->AppPerson)
@@ -31,7 +31,7 @@
 		public function testOverrideOptions() {
 			$testURL1 = "http://localhost";
 
-			$this->assertEquals("https://services-rep.perseids.org/bsp", $this->BSP->getUrl());
+			$this->assertEquals("https://services.perseids.org/bsp", $this->BSP->getUrl());
 			//Should be default url
 			
 			$this->BSP->setUrl($testURL1);
@@ -42,13 +42,15 @@
 
 		public function testPost() {
 			$randomHash = hash('sha256', microtime());
+
+			$this->IdP = new IdentityProvider("http://lascivaroma.com", "LascivaRoma", $randomHash);
+
 			$testPerson = new Person();
 			$testPerson->setId($randomHash);
 			$testPerson->setIdentityProvider($this->IdP);
-			/*
+
 			$testPerson->create($this->BSP);
-			print_r($testPerson->getBSPUuid());
-			*/
+			print_r($testPerson->getUUID());
 
 		}
 	}

@@ -20,7 +20,7 @@
 		 * The URL path endpoint for this object
 		 * @var string 
 		 */
-		protected $path = "person";
+		protected $path = "persons";
 
 		/**
 		 * The main node name
@@ -104,7 +104,7 @@
 		 * @return self
 		 */
 		public function setUUID($UUID) {
-			$this->personIdentifier = $BSPUuid;
+			$this->personIdentifier = $UUID;
 			return $this;
 		} 
 
